@@ -16,7 +16,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://comeriven.github.io/flyriven.github.io/images/image-20190821141127861.png">
 <meta property="og:image" content="https://comeriven.github.io/flyriven.github.io/images/image-20190821141326574.png">
-<meta property="og:updated_time" content="2019-08-23T08:59:51.594Z">
+<meta property="og:updated_time" content="2019-08-23T09:03:04.946Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从零开始配置VPS">
 <meta name="twitter:description" content="环境 Ubuntu 16.04 x64  ssh无密登录创建 ssh 公私钥 123ssh-keygen -t rsacd ~/.ssh/cat id_rsa.pub  将公钥 id_rsa.pub 的内容 copy，链接上服务器 1ssh root@[domain] -p [port]  默认会在 root 用户目录下，这个时候我们需要再次生成一对公私钥 12345678910111213141">
@@ -271,7 +271,7 @@
 
 <p>这样就可以了，如果你对docker感兴趣，可以去官网看看其他的操作。然后我们下一步，接入我们的微信。</p>
 <h4 id="连接微信"><a href="#连接微信" class="headerlink" title="连接微信"></a>连接<strong>微信</strong></h4><blockquote>
-<p>接入这个微信的远离，其实是使用efb去登录了我们的网页版微信，然后所有的信息都会发到efb中，由efb处理之后才会让你在Telegram客户端看到内容，你可以使用Telegram去回复微信，创建分组各种。</p>
+<p>接入这个微信的原理，其实是使用efb去登录了我们的网页版微信，然后所有的信息都会发到efb中，由efb处理之后才会让你在Telegram客户端看到内容，你可以使用Telegram去回复微信，创建分组各种。</p>
 </blockquote>
 <p>我们需要查看docker镜像的日志，获取到登录网页微信的二维码或者网址。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~/Dropbox/docker_application/efb_v2<span class="comment"># docker-compose logs</span></span><br></pre></td></tr></table></figure>
@@ -381,7 +381,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://comeriven.github.io/flyriven.github.io/2019/08/23/how-to-use-vps/" data-id="cjznvwad500017z6cf6jyhnai" class="article-share-link">Share</a>
+      <a data-url="https://comeriven.github.io/flyriven.github.io/2019/08/23/how-to-use-vps/" data-id="cjznw0kh20001386cvcoi318k" class="article-share-link">Share</a>
       
       
     </footer>
