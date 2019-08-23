@@ -7,19 +7,19 @@
   
   <title>从零开始配置VPS | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="环境 Ubuntu 16.04 x64  ssh无密登录创建 ssh 公私钥 123ssh-keygen -t rsacd ~/.ssh/cat id_rsa.pub  将公钥 id_rsa.pub 的内容 copy，链接上服务器 1ssh root@[domain] -p [port]  默认会在 root 用户目录下，这个时候我们需要再次生成一对公私钥 12345678910111213141">
+  <meta name="description" content="环境 Ubuntu 16.04 x64  ssh无密登录创建 ssh 公私钥 123ssh-keygen -t rsacd ~/.ssh/cat id_rsa.pub  将公钥 id_rsa.pub 的内容 copy，链接上服务器 1ssh root@[domain] -p [port]">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从零开始配置VPS">
 <meta property="og:url" content="https://blog.flyriven.com/2019/08/23/how-to-use-vps/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="环境 Ubuntu 16.04 x64  ssh无密登录创建 ssh 公私钥 123ssh-keygen -t rsacd ~/.ssh/cat id_rsa.pub  将公钥 id_rsa.pub 的内容 copy，链接上服务器 1ssh root@[domain] -p [port]  默认会在 root 用户目录下，这个时候我们需要再次生成一对公私钥 12345678910111213141">
+<meta property="og:description" content="环境 Ubuntu 16.04 x64  ssh无密登录创建 ssh 公私钥 123ssh-keygen -t rsacd ~/.ssh/cat id_rsa.pub  将公钥 id_rsa.pub 的内容 copy，链接上服务器 1ssh root@[domain] -p [port]">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://blog.flyriven.com/images/image-20190821141127861.png">
 <meta property="og:image" content="https://blog.flyriven.com/images/image-20190821141326574.png">
-<meta property="og:updated_time" content="2019-08-23T09:13:51.390Z">
+<meta property="og:updated_time" content="2019-08-23T09:31:09.398Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从零开始配置VPS">
-<meta name="twitter:description" content="环境 Ubuntu 16.04 x64  ssh无密登录创建 ssh 公私钥 123ssh-keygen -t rsacd ~/.ssh/cat id_rsa.pub  将公钥 id_rsa.pub 的内容 copy，链接上服务器 1ssh root@[domain] -p [port]  默认会在 root 用户目录下，这个时候我们需要再次生成一对公私钥 12345678910111213141">
+<meta name="twitter:description" content="环境 Ubuntu 16.04 x64  ssh无密登录创建 ssh 公私钥 123ssh-keygen -t rsacd ~/.ssh/cat id_rsa.pub  将公钥 id_rsa.pub 的内容 copy，链接上服务器 1ssh root@[domain] -p [port]">
 <meta name="twitter:image" content="https://blog.flyriven.com/images/image-20190821141127861.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -97,6 +97,8 @@
 
 <p>将公钥 <strong>id_rsa.pub</strong> 的内容 copy，链接上服务器</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@[domain] -p [port]</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
 
 <p>默认会在 root 用户目录下，这个时候我们需要再次生成一对公私钥</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster:~# ssh-keygen -t rsa</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/root/.ssh/id_rsa):</span><br><span class="line">Created directory '/root/.ssh'.</span><br><span class="line">Enter passphrase (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved in /root/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /root/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:JO3v66ip8fefzexPuZR2/7uoDXtfqy1DIzNMrRleJYc root@hot-cluster-1.localdomain</span><br><span class="line">The key's randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|              .  |</span><br><span class="line">|       .     E o |</span><br><span class="line">|      . o   . +  |</span><br><span class="line">|       +   o o   |</span><br><span class="line">|        S + =    |</span><br><span class="line">|         . O o  o|</span><br><span class="line">|    .     ..= .=+|</span><br><span class="line">|     o ..o  +O=.*|</span><br><span class="line">|    ..+o.o====XOB|</span><br><span class="line">+----[SHA256]-----+</span><br><span class="line">root@hot-cluster:~# ls -la</span><br><span class="line">total 32</span><br><span class="line">drwx------  5 root root 4096 Aug 20 06:17 .</span><br><span class="line">drwxr-xr-x 23 root root 4096 Aug 20 05:26 ..</span><br><span class="line">-rw-r--r--  1 root root 3106 Oct 22  2015 .bashrc</span><br><span class="line">drwx------  2 root root 4096 Mar 14  2017 .cache</span><br><span class="line">drwxr-xr-x  2 root root 4096 Mar 14  2017 .nano</span><br><span class="line">-rw-r--r--  1 root root  148 Aug 17  2015 .profile</span><br><span class="line">drwx------  2 root root 4096 Aug 20 06:17 .ssh</span><br><span class="line">-rw-r--r--  1 root root  197 Aug 20 05:27 virt-sysprep-firstboot.log</span><br><span class="line">root@hot-cluster:~#</span><br></pre></td></tr></table></figure>
@@ -381,7 +383,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://blog.flyriven.com/2019/08/23/how-to-use-vps/" data-id="cjznwy5z30002k16cj9ai9u4m" class="article-share-link">Share</a>
+      <a data-url="https://blog.flyriven.com/2019/08/23/how-to-use-vps/" data-id="cjznx0izd0002o16cru40v2eg" class="article-share-link">Share</a>
       
       
     </footer>
