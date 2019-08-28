@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+  <meta name="description" content="hello everybody,  在我热衷于编写一些笔记发布到hexo所生成的静态博客的时候，遇到了不少问题。其中就是hexo生成的静态资源发布到GitHub pages后并不能正确渲染数学公式。">
+<meta name="keywords" content="tmpfile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fix hexo cant render mathematical formula">
+<meta property="og:url" content="https://blog.flyriven.com/Front-End-Technology/fix-hexo-cant-render-mathematical-formula/index.html">
+<meta property="og:site_name" content="Tmpfile&#39;s Blog">
+<meta property="og:description" content="hello everybody,  在我热衷于编写一些笔记发布到hexo所生成的静态博客的时候，遇到了不少问题。其中就是hexo生成的静态资源发布到GitHub pages后并不能正确渲染数学公式。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://blog.flyriven.com/images/image-20190828191239408.png">
+<meta property="og:updated_time" content="2019-08-28T11:12:56.043Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fix hexo cant render mathematical formula">
+<meta name="twitter:description" content="hello everybody,  在我热衷于编写一些笔记发布到hexo所生成的静态博客的时候，遇到了不少问题。其中就是hexo生成的静态资源发布到GitHub pages后并不能正确渲染数学公式。">
+<meta name="twitter:image" content="https://blog.flyriven.com/images/image-20190828191239408.png">
+  <link rel="canonical" href="https://blog.flyriven.com/Front-End-Technology/fix-hexo-cant-render-mathematical-formula/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>fix hexo cant render mathematical formula | Tmpfile's Blog</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tmpfile's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">時間是一碗長情酒，抿一口，到白頭</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://blog.flyriven.com/Front-End-Technology/fix-hexo-cant-render-mathematical-formula/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="comeriven">
+      <meta itemprop="description" content="而今千里無書信，空待枝頭燕傳歌">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tmpfile's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">fix hexo cant render mathematical formula
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-08-28 18:50:05 / Modified: 19:12:56" itemprop="dateCreated datePublished" datetime="2019-08-28T18:50:05+08:00">2019-08-28</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>hello everybody, </p>
+<p>在我热衷于编写一些笔记发布到hexo所生成的静态博客的时候，遇到了不少问题。其中就是hexo生成的静态资源发布到GitHub pages后并不能正确渲染数学公式。</p>
+<a id="more"></a>
+<p>数学是科学的基础，我们应该热爱它，拥抱它。</p>
+<p>之前，我尝试总结数学知识「从初中开始」，遭到我的朋友卢老师无情嘲笑，这并不能形成对我的打击，我依然热爱数学「哪怕我不会」。</p>
+<blockquote>
+<p>大家知道在数学的康庄大道上，总是会有各种各样想不到的事情会发生。</p>
+</blockquote>
+<p>接下来回到正题，怎么解决hexo不能正确渲染数学公式的问题。</p>
+<h3 id="更换渲染引擎"><a href="#更换渲染引擎" class="headerlink" title="更换渲染引擎"></a>更换渲染引擎</h3><p>第一步我们需要跟换一个渲染引擎。hexo 提供的 <strong>hexo-renderer-marked</strong> 并不满足我们的需要。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ npm uninstall hexo-renderer-marked --save</span><br></pre></td></tr></table></figure>
+<p>然后我们需要安装新的引擎，<strong>hexo-renderer-kramed</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ npm install hexo-renderer-kramed --save</span><br></pre></td></tr></table></figure>
+<h3 id="修改主题配置"><a href="#修改主题配置" class="headerlink" title="修改主题配置"></a>修改主题配置</h3><p>安装一个npm包无疑是很简单的，接下来我们需要启用next这个主题的Math渲染的功能。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Math Formulas Render Support</span></span><br><span class="line"><span class="attr">math:</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Default (true) will load mathjax / katex script on demand.</span></span><br><span class="line">  <span class="comment"># That is it only render those page which has `mathjax: true` in Front-matter.</span></span><br><span class="line">  <span class="comment"># If you set it to false, it will load mathjax / katex srcipt EVERY PAGE.</span></span><br><span class="line"><span class="attr">  per_page:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># hexo-renderer-pandoc (or hexo-renderer-kramed) required for full MathJax support.</span></span><br><span class="line"><span class="attr">  mathjax:</span></span><br><span class="line"><span class="attr">    enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># See: https://mhchem.github.io/MathJax-mhchem/</span></span><br><span class="line"><span class="attr">    mhchem:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>在 <strong>~/blog/theme/next/_config.yml</strong> 中找到 <strong>math</strong> 这个属性，<strong>enable</strong> 设置为 <strong>true</strong>，下面的 <strong>mathjax</strong> 属性的<strong>enable</strong> 也要设置为 <strong>true</strong></p>
+<p>上面 <strong>blog</strong> 是我用 <strong>hexo</strong> 初始化博客的目录，<strong>theme</strong> 就是我下载主题的目录。</p>
+<p>接下来，我们需要在<strong>post</strong>模版中配置启用<strong>mathjax</strong>，在 <strong>~/blog/scaffolds</strong> 目录下找到 <strong>post.md</strong> 文件打开：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#123;&#123; title &#125;&#125;</span><br><span class="line">date: &#123;&#123; date &#125;&#125;</span><br><span class="line">categories:</span><br><span class="line">tags:</span><br><span class="line">mathjax: true</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>增加 <strong>mathjax: true</strong> 这一行</p>
+<h3 id="修改引擎"><a href="#修改引擎" class="headerlink" title="修改引擎"></a>修改引擎</h3><p>完成了上面的步骤，对达成目标又更近了一步，最后我们需要稍微的修改一点点儿东西，来解决kramed引擎行内渲染的小问题。</p>
+<p>首先我们打开文件 <strong>~/blog/node_modules/kramed/lib/rules/inline.js</strong></p>
+<p>找到第11行 escape 属性的位置。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> inline = &#123;</span><br><span class="line">  <span class="built_in">escape</span>: <span class="regexp">/^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/</span>,</span><br><span class="line">  autolink: <span class="regexp">/^&lt;([^ &gt;]+(@|:\/)[^ &gt;]+)&gt;/</span>,</span><br><span class="line">  url: noop,</span><br></pre></td></tr></table></figure>
+<p>改为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> inline = &#123;</span><br><span class="line">  <span class="comment">// escape: /^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/,</span></span><br><span class="line">  <span class="built_in">escape</span>: <span class="regexp">/^\\([`*\[\]()#$+\-.!_&gt;])/</span>,</span><br><span class="line">  autolink: <span class="regexp">/^&lt;([^ &gt;]+(@|:\/)[^ &gt;]+)&gt;/</span>,</span><br><span class="line">  url: noop,</span><br></pre></td></tr></table></figure>
+<p>第20行 em 属性的位置。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">reffn: <span class="regexp">/^!?\[\^(inside)\]/</span>,</span><br><span class="line"> strong: <span class="regexp">/^__([\s\S]+?)__(?!_)|^\*\*([\s\S]+?)\*\*(?!\*)/</span>,</span><br><span class="line"> em: <span class="regexp">/^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br><span class="line"> code: <span class="regexp">/^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/</span>,</span><br></pre></td></tr></table></figure>
+<p>改为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">reffn: <span class="regexp">/^!?\[\^(inside)\]/</span>,</span><br><span class="line"> strong: <span class="regexp">/^__([\s\S]+?)__(?!_)|^\*\*([\s\S]+?)\*\*(?!\*)/</span>,</span><br><span class="line"> <span class="comment">// em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span></span><br><span class="line"> em: <span class="regexp">/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br><span class="line"> code: <span class="regexp">/^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/</span>,</span><br></pre></td></tr></table></figure>
+<p>完事儿，齐活儿了，来生成静态资源发布试试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~$ hexo clean</span><br><span class="line">~$ hexo g</span><br><span class="line">~$ hexo d</span><br></pre></td></tr></table></figure>
+<p>看看效果：</p>
+<p><img src="../../images/image-20190828191239408.png" alt="image-20190828191239408"></p>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/Life-And-Emotion/do-yourself/" rel="next" title="do yourself">
+                  <i class="fa fa-chevron-left"></i> do yourself
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#更换渲染引擎"><span class="nav-number">1.</span> <span class="nav-text">更换渲染引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改主题配置"><span class="nav-number">2.</span> <span class="nav-text">修改主题配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改引擎"><span class="nav-number">3.</span> <span class="nav-text">修改引擎</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">comeriven</p>
+  <div class="site-description" itemprop="description">而今千里無書信，空待枝頭燕傳歌</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">comeriven</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>
