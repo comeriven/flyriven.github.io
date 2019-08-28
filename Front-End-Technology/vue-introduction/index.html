@@ -68,7 +68,7 @@
 <meta property="og:image" content="https://blog.flyriven.com/images/image-20190828145654255.png">
 <meta property="og:image" content="https://blog.flyriven.com/images/image-20190828151252758.png">
 <meta property="og:image" content="https://blog.flyriven.com/images/image-20190828151424516.png">
-<meta property="og:updated_time" content="2019-08-28T07:19:25.236Z">
+<meta property="og:updated_time" content="2019-08-28T07:29:10.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue 光速入门">
 <meta name="twitter:description" content="vue introduction介绍 Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。  和 react 还挺相似的，都专注于视图层，但是 vue 的门槛要低一点，对中文的支持比较好。">
@@ -266,7 +266,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-08-28 15:19:25" itemprop="dateModified" datetime="2019-08-28T15:19:25+08:00">2019-08-28</time>
+                <time title="Modified: 2019-08-28 15:29:10" itemprop="dateModified" datetime="2019-08-28T15:29:10+08:00">2019-08-28</time>
               </span>
             
           
@@ -340,7 +340,7 @@
 </ul>
 </blockquote>
 
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>官网不推荐我们使用 <strong>vue-cli</strong> 来开启我们的 <strong>vue</strong> 之旅，不过因为我懂一点点浅薄的 <strong>react</strong> 知识，所以我决定不听<strong>尤雨溪大佬</strong>的，直接使用<strong>vue-cli</strong>来创建我们的demo。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>官网不推荐我们使用 <strong>vue-cli</strong> 来开启我们的 <strong>vue</strong> 之旅，不过因为我懂一点点浅薄的 <strong>react</strong> 知识，所以我决定不听<strong>尤雨溪大佬</strong>的，直接使用<strong>vue-cli</strong>来创建我们的demo。</p>
 <p>首先，我们需要有 node 和 npm，这里我推荐使用 <a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener">nvm</a> 来安装node，这样的话方便管理我们的node版本。点击前面的 nvm 超链接查看怎么安装和配置。</p>
 <p>第二步，安装vue-cli.</p>
 <p><strong>vue-cli</strong> 是旧版本的称呼，新版本改成了<strong>@vue/cli</strong>，来一段儿引用先：</p>
@@ -365,7 +365,7 @@
 <p>安装也很简单：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ brew cask install webstorm</span><br></pre></td></tr></table></figure>
 
-<h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><p><strong>@vue/cli</strong> 提供了非常方便创建项目的命令，可以同时安装一些包，如果你嫌麻烦的话也可以选择直接使用<strong>webstorm</strong>来创建你的vue项目，会简单快捷，但是不能，让你选择要安装其他包，如果有需要配置的包，你还需要额外在配置。</p>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p><strong>@vue/cli</strong> 提供了非常方便创建项目的命令，可以同时安装一些包，如果你嫌麻烦的话也可以选择直接使用<strong>webstorm</strong>来创建你的vue项目，会简单快捷，但是不能，让你选择要安装其他包，如果有需要配置的包，你还需要额外在配置。</p>
 <p>另外 <strong>@vue/cli</strong> 还提供了一套 web 界面来创建和管理项目。这点比 react 的脚手架 create-react-app 好无数倍。</p>
 <p>这里我就头铁的选择<strong>webstorm</strong> 来创建项目的方式。</p>
 <p>根据上图，点击 <strong>Create New Project</strong>，进入这个界面：</p>
@@ -387,7 +387,9 @@
 <p><img src="../../images/image-20190828151252758.png" alt="image-20190828151252758"></p>
 <p>项目启动后，在Run中可以看到项目启动的信息，点击Local这个后面的超链接 <a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a> 就能看到我们启动的项目了，之后就可以开始开发了。</p>
 <p><img src="../../images/image-20190828151424516.png" alt="image-20190828151424516"></p>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+<h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><p>组件这玩意儿可以说是vue的核心了，我们可以把我们开发的web应用的每一个功能模块，甚至每一个元素都看作一个组件，就像「乐高积木」一样，一块块积木按照一定的顺序，位置，放在固定的地方，就能搭建成一个微型的小世界。组件也是如此，一个一个的小组件堆积起来就能构成我们的应用。</p>
+<p>其中区别在于我们组件是可以复用的，但是积木却不能复用。</p>
+<h2 id="创建组件"><a href="#创建组件" class="headerlink" title="创建组件"></a>创建组件</h2><h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><h2 id="属性和状态"><a href="#属性和状态" class="headerlink" title="属性和状态"></a>属性和状态</h2><h2 id="样式处理"><a href="#样式处理" class="headerlink" title="样式处理"></a>样式处理</h2><h2 id="表单处理"><a href="#表单处理" class="headerlink" title="表单处理"></a>表单处理</h2><h2 id="组件之间通信"><a href="#组件之间通信" class="headerlink" title="组件之间通信"></a>组件之间通信</h2><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
     </div>
 
     
@@ -473,7 +475,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-introduction"><span class="nav-number">1.</span> <span class="nav-text">vue introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工具"><span class="nav-number">1.2.1.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建项目"><span class="nav-number">1.2.2.</span> <span class="nav-text">创建项目</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-introduction"><span class="nav-number">1.</span> <span class="nav-text">vue introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-number">2.1.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建项目"><span class="nav-number">2.2.</span> <span class="nav-text">创建项目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件"><span class="nav-number">3.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建组件"><span class="nav-number">3.1.</span> <span class="nav-text">创建组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件的生命周期"><span class="nav-number">3.2.</span> <span class="nav-text">组件的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性和状态"><span class="nav-number">3.3.</span> <span class="nav-text">属性和状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#样式处理"><span class="nav-number">3.4.</span> <span class="nav-text">样式处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表单处理"><span class="nav-number">3.5.</span> <span class="nav-text">表单处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件之间通信"><span class="nav-number">3.6.</span> <span class="nav-text">组件之间通信</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
