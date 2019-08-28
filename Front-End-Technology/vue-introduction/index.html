@@ -301,7 +301,6 @@
 </blockquote>
 <p>和 <strong>react</strong> 还挺相似的，都专注于视图层，但是 <strong>vue</strong> 的门槛要低一点，对中文的支持比较好。</p>
 <a id="more"></a>
-
 <p>OK，我们需要光速入门vue，直接上手做项目，不需要深入去理解vue设计思想各种，抛弃一切复杂的内容，仅仅保留我们需要的知识点，快速实现能用vue来制作一个网站，并且搭配全家桶，什么路由啊，什么状态管理的。</p>
 <p>我们想要学习一个新的知识，首先要做的不是买书，买视频什么的，第一件事我们需要提炼一下这个技术有什么样的知识点，然后总结记录下来，一样一样的学习这些知识点，然后在组成一个完整的体系，这样我们就掌握了这些知识。</p>
 <p>总结下来我们需要知道这些知识点：</p>
@@ -340,7 +339,6 @@
 </li>
 </ul>
 </blockquote>
-
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>官网不推荐我们使用 <strong>vue-cli</strong> 来开启我们的 <strong>vue</strong> 之旅，不过因为我懂一点点浅薄的 <strong>react</strong> 知识，所以我决定不听<strong>尤雨溪大佬</strong>的，直接使用<strong>vue-cli</strong>来创建我们的demo。</p>
 <p>首先，我们需要有 node 和 npm，这里我推荐使用 <a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener">nvm</a> 来安装node，这样的话方便管理我们的node版本。点击前面的 nvm 超链接查看怎么安装和配置。</p>
 <p>第二步，安装vue-cli.</p>
@@ -353,19 +351,15 @@
 <p><img src="../../images/image-20190827173919475.png" alt="image-20190827173919475"></p>
 <p>接下来我们需要安装一些 <strong>@vue/cli</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ npm install -g @vue/cli</span><br></pre></td></tr></table></figure>
-
 <p>如果你是用的 <strong>yarn</strong> 的话这样安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ yarn global add @vue/cli</span><br></pre></td></tr></table></figure>
-
 <p>验证一下有没有安装成功：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~$ vue --version</span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">3.11.0</span><br></pre></td></tr></table></figure>
-
 <p>看到版本号就是安装成功的。</p>
 <p>接下来我们需要安装开发工具，这里推荐使用 <strong>webstorm</strong>，不一样的开发体验。</p>
 <p><img src="../../images/image-20190828141631781.png" alt="image-20190828141631781"></p>
 <p>安装也很简单：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ brew cask install webstorm</span><br></pre></td></tr></table></figure>
-
 <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p><strong>@vue/cli</strong> 提供了非常方便创建项目的命令，可以同时安装一些包，如果你嫌麻烦的话也可以选择直接使用<strong>webstorm</strong>来创建你的vue项目，会简单快捷，但是不能，让你选择要安装其他包，如果有需要配置的包，你还需要额外在配置。</p>
 <p>另外 <strong>@vue/cli</strong> 还提供了一套 web 界面来创建和管理项目。这点比 react 的脚手架 create-react-app 好无数倍。</p>
 <p>这里我就头铁的选择<strong>webstorm</strong> 来创建项目的方式。</p>
@@ -376,7 +370,6 @@
 <p><img src="../../images/image-20190828145654255.png" alt="image-20190828145654255"></p>
 <p>好了，安装完成。现在长这样，我们可以点击上面绿色的三角按钮来启动项目，也可以在Terminal中输入<strong>yarn serve</strong>来启动项目。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">╭─    ~/workspace/ttzw     master </span><br><span class="line">╰─ tree -L 1                                                                             10.65.106.73   15:06 </span><br><span class="line">.</span><br><span class="line">├── README.md</span><br><span class="line">├── babel.config.js</span><br><span class="line">├── node_modules</span><br><span class="line">├── package.json</span><br><span class="line">├── public</span><br><span class="line">├── src</span><br><span class="line">└── yarn.lock</span><br><span class="line"></span><br><span class="line">3 directories, 4 files</span><br></pre></td></tr></table></figure>
-
 <p>来看下结构.</p>
 <p>README.md 你懂的。</p>
 <p>babel.config.js 是babel 的配置文件，如果你需要更改babel配置的话，修改这个文件。</p>
