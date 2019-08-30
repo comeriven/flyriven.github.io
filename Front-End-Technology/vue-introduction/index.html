@@ -69,7 +69,7 @@
 <meta property="og:image" content="https://blog.flyriven.com/images/image-20190828151252758.png">
 <meta property="og:image" content="https://blog.flyriven.com/images/image-20190828151424516.png">
 <meta property="og:image" content="https://blog.flyriven.com/images/components.png">
-<meta property="og:updated_time" content="2019-08-28T07:34:12.782Z">
+<meta property="og:updated_time" content="2019-08-30T08:14:57.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue 光速入门">
 <meta name="twitter:description" content="vue introduction介绍 Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。  和 react 还挺相似的，都专注于视图层，但是 vue 的门槛要低一点，对中文的支持比较好。">
@@ -267,7 +267,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-08-28 15:34:12" itemprop="dateModified" datetime="2019-08-28T15:34:12+08:00">2019-08-28</time>
+                <time title="Modified: 2019-08-30 16:14:57" itemprop="dateModified" datetime="2019-08-30T16:14:57+08:00">2019-08-30</time>
               </span>
             
           
@@ -384,7 +384,16 @@
 <h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><p>组件这玩意儿可以说是vue的核心了，我们可以把我们开发的web应用的每一个功能模块，甚至每一个元素都看作一个组件，就像「乐高积木」一样，一块块积木按照一定的顺序，位置，放在固定的地方，就能搭建成一个微型的小世界。组件也是如此，一个一个的小组件堆积起来就能构成我们的应用。</p>
 <p>其中区别在于我们组件是可以复用的，但是积木却不能复用。</p>
 <p><img src="../../images/components.png" alt="Component Tree"></p>
-<h2 id="创建组件"><a href="#创建组件" class="headerlink" title="创建组件"></a>创建组件</h2><h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><h2 id="属性和状态"><a href="#属性和状态" class="headerlink" title="属性和状态"></a>属性和状态</h2><h2 id="样式处理"><a href="#样式处理" class="headerlink" title="样式处理"></a>样式处理</h2><h2 id="表单处理"><a href="#表单处理" class="headerlink" title="表单处理"></a>表单处理</h2><h2 id="组件之间通信"><a href="#组件之间通信" class="headerlink" title="组件之间通信"></a>组件之间通信</h2><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+<h2 id="创建组件"><a href="#创建组件" class="headerlink" title="创建组件"></a>创建组件</h2><p><em>实战</em> 永远是最好的老师，接下来我们要真刀真枪的干一场，写一个反洗钱系统，我们优先跳过组件这一节，先看<a href="#路由">路由</a>和<a href="#状态管理">状态管理</a>。</p>
+<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><h2 id="属性和状态"><a href="#属性和状态" class="headerlink" title="属性和状态"></a>属性和状态</h2><h2 id="样式处理"><a href="#样式处理" class="headerlink" title="样式处理"></a>样式处理</h2><h2 id="表单处理"><a href="#表单处理" class="headerlink" title="表单处理"></a>表单处理</h2><h2 id="组件之间通信"><a href="#组件之间通信" class="headerlink" title="组件之间通信"></a>组件之间通信</h2><h1 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h1><h2 id="Vue-router"><a href="#Vue-router" class="headerlink" title="Vue-router"></a>Vue-router</h2><p>我们先来了解下路由的概念。</p>
+<p>在维基百科中路由是这样描述的：</p>
+<blockquote>
+<p><strong>路由</strong>（<strong>routing</strong>）就是通过互联的网络把信息从源地址传输到目的地址的活动。</p>
+</blockquote>
+<p>那我们更直白一点，可以这样解释：</p>
+<p><strong>把甲方👨的需求扔给<em>对应</em>的乙方开发🐶的产品🐶，就叫做路由。</strong></p>
+<p>注意看，<strong><em>对应</em></strong>两个字标记了斜体，我们看到的应用，其实背后有一个或者多个开发🐶在干活，每个🐶大佬做不同的工作，组合起来称为我们看到的应用。需求方👨将需求提出来，🐶产品（路由）收到需求，然后根据需求的不同分配给不同的🐶大佬，这个过程就是路由所完成的。</p>
+<h1 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h1><h2 id="vuex"><a href="#vuex" class="headerlink" title="vuex"></a>vuex</h2><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
     </div>
 
     
@@ -470,7 +479,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-introduction"><span class="nav-number">1.</span> <span class="nav-text">vue introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-number">2.1.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建项目"><span class="nav-number">2.2.</span> <span class="nav-text">创建项目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件"><span class="nav-number">3.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建组件"><span class="nav-number">3.1.</span> <span class="nav-text">创建组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件的生命周期"><span class="nav-number">3.2.</span> <span class="nav-text">组件的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性和状态"><span class="nav-number">3.3.</span> <span class="nav-text">属性和状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#样式处理"><span class="nav-number">3.4.</span> <span class="nav-text">样式处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表单处理"><span class="nav-number">3.5.</span> <span class="nav-text">表单处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件之间通信"><span class="nav-number">3.6.</span> <span class="nav-text">组件之间通信</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-introduction"><span class="nav-number">1.</span> <span class="nav-text">vue introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-number">2.1.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建项目"><span class="nav-number">2.2.</span> <span class="nav-text">创建项目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件"><span class="nav-number">3.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建组件"><span class="nav-number">3.1.</span> <span class="nav-text">创建组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件的生命周期"><span class="nav-number">3.2.</span> <span class="nav-text">组件的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性和状态"><span class="nav-number">3.3.</span> <span class="nav-text">属性和状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#样式处理"><span class="nav-number">3.4.</span> <span class="nav-text">样式处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表单处理"><span class="nav-number">3.5.</span> <span class="nav-text">表单处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件之间通信"><span class="nav-number">3.6.</span> <span class="nav-text">组件之间通信</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由"><span class="nav-number">4.</span> <span class="nav-text">路由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-router"><span class="nav-number">4.1.</span> <span class="nav-text">Vue-router</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态管理"><span class="nav-number">5.</span> <span class="nav-text">状态管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vuex"><span class="nav-number">5.1.</span> <span class="nav-text">vuex</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
