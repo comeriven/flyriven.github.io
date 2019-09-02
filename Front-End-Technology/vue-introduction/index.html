@@ -69,7 +69,7 @@
 <meta property="og:image" content="https://blog.flyriven.com/images/image-20190828151252758.png">
 <meta property="og:image" content="https://blog.flyriven.com/images/image-20190828151424516.png">
 <meta property="og:image" content="https://blog.flyriven.com/images/components.png">
-<meta property="og:updated_time" content="2019-08-30T10:32:08.343Z">
+<meta property="og:updated_time" content="2019-09-02T06:22:47.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue 光速入门">
 <meta name="twitter:description" content="vue introduction介绍 Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。  和 react 还挺相似的，都专注于视图层，但是 vue 的门槛要低一点，对中文的支持比较好。">
@@ -267,7 +267,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-08-30 18:32:08" itemprop="dateModified" datetime="2019-08-30T18:32:08+08:00">2019-08-30</time>
+                <time title="Modified: 2019-09-02 14:22:47" itemprop="dateModified" datetime="2019-09-02T14:22:47+08:00">2019-09-02</time>
               </span>
             
           
@@ -412,7 +412,25 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">╭─    ~/workspace/diggerui     master   </span><br><span class="line">╰─ yarn add vue-router</span><br><span class="line">yarn add v1.17.3</span><br><span class="line">[1/4] 🔍  Resolving packages...</span><br><span class="line">[2/4] 🚚  Fetching packages...</span><br><span class="line">[3/4] 🔗  Linking dependencies...</span><br><span class="line">[4/4] 🔨  Building fresh packages...</span><br><span class="line">success Saved lockfile.</span><br><span class="line">success Saved 1 new dependency.</span><br><span class="line">info Direct dependencies</span><br><span class="line">└─ vue-router@3.1.2</span><br><span class="line">info All dependencies</span><br><span class="line">└─ vue-router@3.1.2</span><br><span class="line">✨  Done <span class="keyword">in</span> 3.38s.</span><br></pre></td></tr></table></figure>
 <p>如果你用 <strong>npm</strong> 也是一样的： </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ npm install --save vue-router</span><br></pre></td></tr></table></figure>
-<h3 id="vue-router-使用"><a href="#vue-router-使用" class="headerlink" title="vue-router 使用"></a>vue-router 使用</h3><h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><h4 id="模板编译器不可用"><a href="#模板编译器不可用" class="headerlink" title="模板编译器不可用"></a>模板编译器不可用</h4><p>按照官网配置好路由后，控制台这个错误，并且页面空白</p>
+<h3 id="vue-router-使用"><a href="#vue-router-使用" class="headerlink" title="vue-router 使用"></a>vue-router 使用</h3><p>在使用之前，先处理一下js报错的问题：<a href="#模板编译器不可用">模板编译器不可用</a></p>
+<p>我们的路由是一棵由一个一个的节点组成的树🌲，最顶上是一个根节点，然后分散出其他的节点。</p>
+<blockquote class="pullquote mindmap mindmap-md"><ul>
+<li>/<ul>
+<li>/a<ul>
+<li>/aa</li>
+<li>/ab</li>
+</ul>
+</li>
+<li>/b<ul>
+<li>/ba</li>
+<li>/bb</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><h4 id="模板编译器不可用"><a href="#模板编译器不可用" class="headerlink" title="模板编译器不可用"></a>模板编译器不可用</h4><p>按照官网配置好路由后，控制台这个错误，并且页面空白</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// console</span><br><span class="line">You are using the runtime-only build of Vue <span class="built_in">where</span> the template compiler is not available. Either pre-compile the templates into render <span class="built_in">functions</span>, or use the compiler-included build.</span><br></pre></td></tr></table></figure>
 <p>解决办法：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// touch vue.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    runtimeCompiler: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
