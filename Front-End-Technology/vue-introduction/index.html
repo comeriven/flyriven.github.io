@@ -71,7 +71,7 @@
 <meta property="og:image" content="https://blog.flyriven.com/images/components.png">
 <meta property="og:image" content="https://blog.flyriven.com/images/uisdc-didiweblayout-20180110-7.jpg">
 <meta property="og:image" content="https://blog.flyriven.com/images/flow.png">
-<meta property="og:updated_time" content="2019-09-16T06:04:48.796Z">
+<meta property="og:updated_time" content="2019-09-16T06:34:50.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue 光速入门">
 <meta name="twitter:description" content="vue introduction介绍 Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。  和 react 还挺相似的，都专注于视图层，但是 vue 的门槛要低一点，对中文的支持比较好。">
@@ -269,7 +269,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-16 14:04:48" itemprop="dateModified" datetime="2019-09-16T14:04:48+08:00">2019-09-16</time>
+                <time title="Modified: 2019-09-16 14:34:50" itemprop="dateModified" datetime="2019-09-16T14:34:50+08:00">2019-09-16</time>
               </span>
             
           
@@ -510,7 +510,21 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; mapGetters &#125; <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  computed: &#123;</span><br><span class="line">  <span class="comment">// 使用对象展开运算符将 getter 混入 computed 对象中</span></span><br><span class="line">    ...mapGetters([</span><br><span class="line">      <span class="string">'doneTodosCount'</span>,</span><br><span class="line">      <span class="string">'anotherGetter'</span>,</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    ])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果要给getter属性重新命名，需要使用对象形式：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mapGetters(&#123;</span><br><span class="line">  <span class="comment">// 把 `this.doneCount` 映射为 `this.$store.getters.doneTodosCount`</span></span><br><span class="line">  doneCount: <span class="string">'doneTodosCount'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h4 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h4><h4 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h4><h4 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h4><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+<h4 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h4><p>前面我们说到Vuex 创建的 store 是一个仓库，我们不能直接修改仓库里的东西，就比如说我们在港口有个大仓库，总不能随便能进去拿东西或者放东西进去，这样的话，我们仓库很难管理。所以我们仓库有四面墙围起来，有一个大门可以提供给人出入。我们可以通过大门进入的仓库，去整理仓库里的东西。这个大门，就是我们Vuex中提供的修改store中的状态的唯一方法。</p>
+<p>mutation 是一个对象，其中所有的属性都是一个个的事件，或者说方法，这些方法是变更store中状态的方法。</p>
+<p>mutation中的方法有以下特征：</p>
+<ol>
+<li>每个mutation都有一个字符串类型的<strong>事件类型(type)</strong>和一个<strong>回调函数(handler)</strong></li>
+<li>Mutation 遵循Vue的响应规则<ol>
+<li>提前在store中初始化好所需属性</li>
+<li>如果要在对象上添加新属性，需要使用 <strong>Vue.set(obj, ‘newProp’, propVal)</strong>, 或者新对象替换老对象(重新赋值)</li>
+</ol>
+</li>
+<li>mutation <strong>必须是同步函数</strong>，如果有异步操作，可以使用Action</li>
+<li>建议的话用常量来代替mutation的事件类型。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例子</span></span><br><span class="line"><span class="keyword">const</span> TODO_MUTATION = <span class="string">'TODO_MUTATION'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    xxxx: <span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    [TODO_MUATAION] (state) &#123;</span><br><span class="line">      state.xxxx++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h4><h4 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h4><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
     </div>
 
     
