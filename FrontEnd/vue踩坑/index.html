@@ -54,18 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="如果要启用css module 需要在style标签中插入 module 属性，否则不会生效 独立样式表文件的话需要在 style 标签中 @import ‘./App.scss’ 这样引入，仍然使用 :class=”$style.red” 这样的形式使用 autodll-webpack-plugin 插件 path 和webpack的 publicPath冲突 mini-css-extract">
+  <meta name="description" content="如果要启用css module 需要在style标签中插入 module 属性，否则不会生效  独立样式表文件的话需要在 style 标签中 @import ‘./App.scss’ 这样引入，仍然使用 :class=”$style.red” 这样的形式使用  autodll-webpack-plugin 插件 path 和webpack的 publicPath冲突  mini-css-extr">
 <meta name="keywords" content="tmpfile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue踩坑">
 <meta property="og:url" content="https://blog.flyriven.com/FrontEnd/vue踩坑/index.html">
 <meta property="og:site_name" content="Tmpfile&#39;s Blog">
-<meta property="og:description" content="如果要启用css module 需要在style标签中插入 module 属性，否则不会生效 独立样式表文件的话需要在 style 标签中 @import ‘./App.scss’ 这样引入，仍然使用 :class=”$style.red” 这样的形式使用 autodll-webpack-plugin 插件 path 和webpack的 publicPath冲突 mini-css-extract">
+<meta property="og:description" content="如果要启用css module 需要在style标签中插入 module 属性，否则不会生效  独立样式表文件的话需要在 style 标签中 @import ‘./App.scss’ 这样引入，仍然使用 :class=”$style.red” 这样的形式使用  autodll-webpack-plugin 插件 path 和webpack的 publicPath冲突  mini-css-extr">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-19T02:25:36.717Z">
+<meta property="og:updated_time" content="2019-11-19T08:22:38.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue踩坑">
-<meta name="twitter:description" content="如果要启用css module 需要在style标签中插入 module 属性，否则不会生效 独立样式表文件的话需要在 style 标签中 @import ‘./App.scss’ 这样引入，仍然使用 :class=”$style.red” 这样的形式使用 autodll-webpack-plugin 插件 path 和webpack的 publicPath冲突 mini-css-extract">
+<meta name="twitter:description" content="如果要启用css module 需要在style标签中插入 module 属性，否则不会生效  独立样式表文件的话需要在 style 标签中 @import ‘./App.scss’ 这样引入，仍然使用 :class=”$style.red” 这样的形式使用  autodll-webpack-plugin 插件 path 和webpack的 publicPath冲突  mini-css-extr">
   <link rel="canonical" href="https://blog.flyriven.com/FrontEnd/vue踩坑/">
 
 
@@ -259,7 +259,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-19 10:25:36" itemprop="dateModified" datetime="2019-11-19T10:25:36+08:00">2019-11-19</time>
+                <time title="Modified: 2019-11-19 16:22:38" itemprop="dateModified" datetime="2019-11-19T16:22:38+08:00">2019-11-19</time>
               </span>
             
           
@@ -289,11 +289,22 @@
 
       
         <ol>
-<li>如果要启用css module 需要在style标签中插入 module 属性，否则不会生效</li>
-<li>独立样式表文件的话需要在 style 标签中 @import ‘./App.scss’ 这样引入，仍然使用 :class=”$style.red” 这样的形式使用</li>
-<li>autodll-webpack-plugin 插件 path 和webpack的 publicPath冲突</li>
-<li>mini-css-extract-plugin 配置完loader之后还需要配置plugins，2019年11月12号因为忘记配置plugins，导致一致报错，看了半小时。</li>
-<li>Vue-router 如果使用 <strong>history</strong> 模式，会有刷新页面就会404的问题，原因是SPA中当你刷新页面的时候实际请求的是该路径下的页面，但SPA只有index.html因此导致404，开发环境如果用webpack-dev-server，设置<strong>historyApiFallback</strong>属性为true，生产环境nginx配置<strong>try_files  $uri $uri/ /index.html;</strong> <a id="more"></a></li>
+<li><p>如果要启用css module 需要在style标签中插入 module 属性，否则不会生效</p>
+</li>
+<li><p>独立样式表文件的话需要在 style 标签中 @import ‘./App.scss’ 这样引入，仍然使用 :class=”$style.red” 这样的形式使用</p>
+</li>
+<li><p>autodll-webpack-plugin 插件 path 和webpack的 publicPath冲突</p>
+</li>
+<li><p>mini-css-extract-plugin 配置完loader之后还需要配置plugins，2019年11月12号因为忘记配置plugins，导致一致报错，看了半小时。</p>
+</li>
+<li><p>Vue-router 如果使用 <strong>history</strong> 模式，会有刷新页面就会404的问题，原因是SPA中当你刷新页面的时候实际请求的是该路径下的页面，但SPA只有index.html因此导致404，开发环境如果用webpack-dev-server，设置<strong>historyApiFallback</strong>属性为true，生产环境nginx配置<strong>try_files  $uri $uri/ /index.html;</strong> <a id="more"></a></p>
+</li>
+<li><p>组件赖加载，<strong>babel 7.x</strong> 以后需要使用插件 <strong>@babel/plugin-syntax-dynamic-import</strong> </p>
+</li>
+<li><p>如果在.babelrc 中配置了corejs，版本3，需要安装 core-js 和 regenerator-runtime，可在入口js文件中导入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'core-js/stable'</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'regenerator-runtime/runtime'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
 </ol>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
     </div>
