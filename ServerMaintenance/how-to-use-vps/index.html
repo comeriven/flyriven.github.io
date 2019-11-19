@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+  <meta name="description" content="环境 Ubuntu 16.04 x64  ssh无密登录创建 ssh 公私钥 123ssh-keygen -t rsacd ~/.ssh/cat id_rsa.pub 将公钥 id_rsa.pub 的内容 copy，链接上服务器 1ssh root@[domain] -p [port]">
+<meta name="keywords" content="VPS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始配置VPS">
+<meta property="og:url" content="https://blog.flyriven.com/ServerMaintenance/how-to-use-vps/index.html">
+<meta property="og:site_name" content="Tmpfile&#39;s Blog">
+<meta property="og:description" content="环境 Ubuntu 16.04 x64  ssh无密登录创建 ssh 公私钥 123ssh-keygen -t rsacd ~/.ssh/cat id_rsa.pub 将公钥 id_rsa.pub 的内容 copy，链接上服务器 1ssh root@[domain] -p [port]">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://blog.flyriven.com/images/image-20190821141127861.png">
+<meta property="og:image" content="https://blog.flyriven.com/images/image-20190821141326574.png">
+<meta property="og:updated_time" content="2019-08-27T15:55:23.692Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从零开始配置VPS">
+<meta name="twitter:description" content="环境 Ubuntu 16.04 x64  ssh无密登录创建 ssh 公私钥 123ssh-keygen -t rsacd ~/.ssh/cat id_rsa.pub 将公钥 id_rsa.pub 的内容 copy，链接上服务器 1ssh root@[domain] -p [port]">
+<meta name="twitter:image" content="https://blog.flyriven.com/images/image-20190821141127861.png">
+  <link rel="canonical" href="https://blog.flyriven.com/ServerMaintenance/how-to-use-vps/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>从零开始配置VPS | Tmpfile's Blog</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tmpfile's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">時間是一碗長情酒，抿一口，到白頭</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://blog.flyriven.com/ServerMaintenance/how-to-use-vps/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="comeriven">
+      <meta itemprop="description" content="而今千里無書信，空待枝頭燕傳歌">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tmpfile's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">从零开始配置VPS
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-08-23 16:50:17" itemprop="dateCreated datePublished" datetime="2019-08-23T16:50:17+08:00">2019-08-23</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-08-27 23:55:23" itemprop="dateModified" datetime="2019-08-27T23:55:23+08:00">2019-08-27</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Server-Maintenance/" itemprop="url" rel="index"><span itemprop="name">Server-Maintenance</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>Ubuntu 16.04 x64</li>
+</ul>
+<h2 id="ssh无密登录"><a href="#ssh无密登录" class="headerlink" title="ssh无密登录"></a>ssh无密登录</h2><p>创建 ssh 公私钥</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br><span class="line">cd ~/.ssh/</span><br><span class="line">cat id_rsa.pub</span><br></pre></td></tr></table></figure>
+<p>将公钥 <strong>id_rsa.pub</strong> 的内容 copy，链接上服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@[domain] -p [port]</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>默认会在 root 用户目录下，这个时候我们需要再次生成一对公私钥</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster:~# ssh-keygen -t rsa</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/root/.ssh/id_rsa):</span><br><span class="line">Created directory '/root/.ssh'.</span><br><span class="line">Enter passphrase (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved in /root/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /root/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:JO3v66ip8fefzexPuZR2/7uoDXtfqy1DIzNMrRleJYc root@hot-cluster-1.localdomain</span><br><span class="line">The key's randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|              .  |</span><br><span class="line">|       .     E o |</span><br><span class="line">|      . o   . +  |</span><br><span class="line">|       +   o o   |</span><br><span class="line">|        S + =    |</span><br><span class="line">|         . O o  o|</span><br><span class="line">|    .     ..= .=+|</span><br><span class="line">|     o ..o  +O=.*|</span><br><span class="line">|    ..+o.o====XOB|</span><br><span class="line">+----[SHA256]-----+</span><br><span class="line">root@hot-cluster:~# ls -la</span><br><span class="line">total 32</span><br><span class="line">drwx------  5 root root 4096 Aug 20 06:17 .</span><br><span class="line">drwxr-xr-x 23 root root 4096 Aug 20 05:26 ..</span><br><span class="line">-rw-r--r--  1 root root 3106 Oct 22  2015 .bashrc</span><br><span class="line">drwx------  2 root root 4096 Mar 14  2017 .cache</span><br><span class="line">drwxr-xr-x  2 root root 4096 Mar 14  2017 .nano</span><br><span class="line">-rw-r--r--  1 root root  148 Aug 17  2015 .profile</span><br><span class="line">drwx------  2 root root 4096 Aug 20 06:17 .ssh</span><br><span class="line">-rw-r--r--  1 root root  197 Aug 20 05:27 virt-sysprep-firstboot.log</span><br><span class="line">root@hot-cluster:~#</span><br></pre></td></tr></table></figure>
+<p>进入到 <strong>.ssh</strong> 目录，创建一个 <strong>authorized_keys</strong> 文件，并给一个 <strong>644</strong> 的权限，将我们本机的公钥，也就是 <strong>id_rsa.pub</strong> 的内容粘贴进去。退出，重新连接该服务器，你会发现已经不需要你再输入密码了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster:~<span class="comment"># cd .ssh/</span></span><br><span class="line">root@hot-cluster:~/.ssh<span class="comment"># ls</span></span><br><span class="line">id_rsa  id_rsa.pub</span><br><span class="line">root@hot-cluster:~/.ssh<span class="comment"># touch authorized_keys</span></span><br><span class="line">root@hot-cluster:~/.ssh<span class="comment"># ls</span></span><br><span class="line">authorized_keys  id_rsa  id_rsa.pub</span><br><span class="line">root@hot-cluster:~/.ssh<span class="comment"># chmod 644 authorized_keys</span></span><br><span class="line">root@hot-cluster:~/.ssh<span class="comment"># ll</span></span><br><span class="line">total 16</span><br><span class="line">drwx------ 2 root root 4096 Aug 20 06:22 ./</span><br><span class="line">drwx------ 5 root root 4096 Aug 20 06:17 ../</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug 20 06:22 authorized_keys</span><br><span class="line">-rw------- 1 root root 1675 Aug 20 06:17 id_rsa</span><br><span class="line">-rw-r--r-- 1 root root  412 Aug 20 06:17 id_rsa.pub</span><br><span class="line">root@hot-cluster-1:~/.ssh<span class="comment"># vim authorized_keys</span></span><br><span class="line">root@hot-cluster-1:~/.ssh<span class="comment"># cat authorized_keys</span></span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQAxBAAABsdAQDA4JC3Ag2DZsH77YP6bIX0bC5BT+JADyVry7ktGYso2hbPyvgAZo2pnA+Q1WO2Tz3JxnJolDXhJIOm+mRrra1pufJX181LzEI4kBWxZmGHDsj6SoiHOwNgyXcTsS0ixctnL+DDLS8ncD5q40/iKgo7N9p9fE8aBLsd56WgfxU26WNDn3WzM3YNaTEmPnZ6+p6bwe5xnTR0S9sXyWIBfibAXnKzrccYQ9/CLAkL/hHVQzlUnii76gy0E/7Zg9FIta4X2a2tazBbB+ZchuJUEl/j6AfBKwetAIEPq5PEzWEj5oNZJXGFVOAw9TXqDXAbqqmSq/lqOrBD6lbNVXxs5REFPn3 xxx@xxxx-xxx.local</span><br><span class="line">root@hot-cluster-1:~/.ssh<span class="comment"># exit</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置nginx二级域名分发"><a href="#配置nginx二级域名分发" class="headerlink" title="配置nginx二级域名分发"></a>配置nginx二级域名分发</h2><h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install nginx</span><br><span class="line">sudo ufw allow <span class="string">'Nginx HTTP'</span></span><br><span class="line"><span class="comment"># 检查下 nginx 的状态</span></span><br><span class="line">sudo systemctl status nginx</span><br><span class="line"><span class="comment"># output </span></span><br><span class="line">● nginx.service - A high performance web server and a reverse proxy server</span><br><span class="line">   Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)</span><br><span class="line">   Active: active (running) since Tue 2019-08-20 06:35:40 EDT; 15h ago</span><br><span class="line">  Process: 1983 ExecStop=/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid (code=exited, status=1/FAILURE)</span><br><span class="line">  Process: 1900 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 1996 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 1902 (nginx)</span><br><span class="line">    Tasks: 3</span><br><span class="line">   Memory: 2.2M</span><br><span class="line">      CPU: 4.669s</span><br><span class="line">   CGroup: /system.slice/nginx.service</span><br><span class="line">           ├─19902 nginx: master process /usr/sbin/nginx -g daemon on; master_process on</span><br><span class="line">           ├─19903 nginx: worker process</span><br><span class="line">           └─19904 nginx: worker process</span><br><span class="line"></span><br><span class="line">Aug 20 06:35:40 hot-cluster.localdomain systemd[1]: Starting A high performance web server and a reverse proxy server...</span><br><span class="line">Aug 20 06:35:40 hot-cluster.localdomain systemd[1]: Started A high performance web server and a reverse proxy server.</span><br></pre></td></tr></table></figure>
+<h3 id="nginx-状态变更"><a href="#nginx-状态变更" class="headerlink" title="nginx 状态变更"></a>nginx 状态变更</h3><ul>
+<li><p>停止 <strong>nginx</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启 <strong>nginx</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动 <strong>nginx</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新加载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl reload nginx</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h3><p>接下来，需要配置nginx，使我们域名能够分发到二级域名去，通过如下命令找到nginx的配置文件地址</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster:/etc/nginx/conf.d<span class="comment"># nginx -t</span></span><br><span class="line">nginx: the configuration file /etc/nginx/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /etc/nginx/nginx.conf <span class="built_in">test</span> is successful</span><br></pre></td></tr></table></figure>
+<p>从上面返回的结果可以看到配置文件在 <strong>/etc/nginx</strong> 目录下，进入这个目录，使用 <strong>cat</strong> 命令查看一下 <strong>nginx.conf</strong> 文件，通常我们不会直接在 <strong>nginx.conf</strong> 文件中修改，而是在 <strong>nginx.conf</strong> 中引入文件的目录下去增加修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"></span><br><span class="line">	......</span><br><span class="line"></span><br><span class="line">	<span class="comment">##</span></span><br><span class="line">	<span class="comment"># Virtual Host Configs</span></span><br><span class="line">	<span class="comment">##</span></span><br><span class="line"></span><br><span class="line">	include /etc/nginx/conf.d/*.conf;</span><br><span class="line">	include /etc/nginx/sites-enabled/*;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <strong>http</strong> 模块中有个 <strong>Virtual Host Configs</strong> 可以看到配置文件包含了 <strong>/etc/nginx/conf.d/</strong> 下所有的 <strong>.conf</strong> 文件。我们要给二级目录增加一个server，用来解析二级域名，在 <strong>/etc/nginx/conf.d/</strong> 目录下创建一个 <strong>conf</strong> 文件</p>
+<p>创建完毕后，我们需要将服务配置进去，所以这里我们需要先启动我们的服务，这里启动一个ssmgr的服务，要先处理后面的内容。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  x.xxxxxx.com;</span><br><span class="line">    rewrite ^(.*)$ https://$host$1 permanent;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">    listen 443;</span><br><span class="line">    server_name x.flyriven.com;</span><br><span class="line">    ssl on;</span><br><span class="line">    ssl_certificate  /root/Dropbox/x.xxxxxx.com/Nginx/1_x.xxxxxx.com_bundle.crt;</span><br><span class="line">    ssl_certificate_key /root/Dropbox/x.xxxxx.com/Nginx/2_x.xxxxxx.com.key;</span><br><span class="line">    ssl_session_timeout 5m;</span><br><span class="line">    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span><br><span class="line">    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line">    ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">			proxy_set_header           Host $host:$server_port;</span><br><span class="line">			proxy_pass                http://127.0.0.1:9999;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里用了腾讯云申请的证书，一定要去搞个证书，不然的话，订阅功能不能正常使用。</p>
+<h2 id="安装Dropbox"><a href="#安装Dropbox" class="headerlink" title="安装Dropbox"></a>安装Dropbox</h2><p>为什么我们需要Dropbox呢，有了Dropbox，我们可以在自己的电脑上编辑一些内容，同步到服务器上，避免了你手动登录服务器，去创建文件，设置权限等等一系列复杂的操作。比如efb的配置文件内容。</p>
+<p><strong>Dropbox</strong> 的安装特别简单。</p>
+<ul>
+<li>下载 <strong>Dropbox</strong></li>
+<li>运行 <strong>Dropbox</strong> 守护程序</li>
+<li>通过 <strong>python</strong> 脚本启动 <strong>Dropbox</strong></li>
+</ul>
+<h4 id="下载-Dropbox"><a href="#下载-Dropbox" class="headerlink" title="下载 Dropbox"></a>下载 Dropbox</h4><p>我的<strong>VPS</strong>系统是 <strong>Ubuntu 16.04 x86_64</strong> 的，一条命令搞定：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~ &amp;&amp; wget -O - <span class="string">"https://www.dropbox.com/download?plat=lnx.x86_64"</span> | tar xzf -</span><br></pre></td></tr></table></figure>
+<p>如果是其他 32 位的 <strong>Linux 发行版本</strong> 使用下面这条, 64 位的使用上面这条：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~ &amp;&amp; wget -O - <span class="string">"https://www.dropbox.com/download?plat=lnx.x86"</span> | tar xzf -</span><br></pre></td></tr></table></figure>
+<h4 id="运行-Dropbox-守护程序"><a href="#运行-Dropbox-守护程序" class="headerlink" title="运行 Dropbox 守护程序"></a>运行 Dropbox 守护程序</h4><p>下载速度非常快，看到如下界面即是下载完成：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster:~<span class="comment"># wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -</span></span><br><span class="line">--2019-08-20 22:19:35--  https://www.dropbox.com/download?plat=lnx.x86_64</span><br><span class="line">Resolving www.dropbox.com (www.dropbox.com)... 162.125.2.1, 2620:100:6017:1::a27d:201</span><br><span class="line">Connecting to www.dropbox.com (www.dropbox.com)|162.125.2.1|:443... connected.</span><br><span class="line">HTTP request sent, awaiting response... 302 Found</span><br><span class="line">Location: https://clientupdates.dropboxstatic.com/dbx-releng/client/dropbox-lnx.x86_64-79.4.143.tar.gz [following]</span><br><span class="line">--2019-08-20 22:19:36--  https://clientupdates.dropboxstatic.com/dbx-releng/client/dropbox-lnx.x86_64-79.4.143.tar.gz</span><br><span class="line">Resolving clientupdates.dropboxstatic.com (clientupdates.dropboxstatic.com)... 13.225.144.57</span><br><span class="line">Connecting to clientupdates.dropboxstatic.com (clientupdates.dropboxstatic.com)|13.225.144.57|:443... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 95990187 (92M) [binary/octet-stream]</span><br><span class="line">Saving to: <span class="string">'STDOUT'</span></span><br><span class="line"></span><br><span class="line">-                                     100%[========================================================================&gt;]  91.54M  30.1MB/s    <span class="keyword">in</span> 3.0s</span><br><span class="line"></span><br><span class="line">2019-08-20 22:19:39 (30.1 MB/s) - written to stdout [95990187/95990187]</span><br><span class="line"></span><br><span class="line">root@hot-cluster-1:~<span class="comment"># ll</span></span><br><span class="line">total 56</span><br><span class="line">drwx------  8 root root 4096 Aug 20 22:20 ./</span><br><span class="line">drwxr-xr-x 23 root root 4096 Aug 20 06:29 ../</span><br><span class="line">-rw-------  1 root root  506 Aug 20 06:36 .bash_history</span><br><span class="line">-rw-r--r--  1 root root 3106 Oct 22  2015 .bashrc</span><br><span class="line">drwx------  2 root root 4096 Mar 14  2017 .cache/</span><br><span class="line">drwxr-xr-x  7 root root 4096 Aug 20 22:20 .dropbox/</span><br><span class="line">drwxrwxr-x  3 1000 1000 4096 Aug 13 07:34 .dropbox-dist/</span><br><span class="line">drwxr-xr-x  2 root root 4096 Mar 14  2017 .nano/</span><br><span class="line">-rw-r--r--  1 root root  148 Aug 17  2015 .profile</span><br><span class="line">drwx------  2 root root 4096 Aug 20 06:22 .ssh/</span><br><span class="line">-rw-------  1 root root 1100 Aug 20 22:15 .viminfo</span><br><span class="line">-rw-r--r--  1 root root  172 Aug 20 22:19 .wget-hsts</span><br><span class="line">-rw-r--r--  1 root root  197 Aug 20 05:27 virt-sysprep-firstboot.log</span><br></pre></td></tr></table></figure>
+<p>可以看到我们用户目录下已经有一个隐藏的目录 <strong>.dropbox/</strong> 接下来我们需要执行 <strong>Dropbox</strong> 的守护程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster:~<span class="comment"># ~/.dropbox-dist/dropboxd</span></span><br><span class="line">dropbox: locating interpreter</span><br><span class="line">dropbox: logging to /tmp/dropbox-antifreeze-lRsecj</span><br><span class="line">dropbox: initializing</span><br><span class="line">dropbox: initializing python 3.7.2</span><br><span class="line">dropbox: setting program path <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/dropbox'</span></span><br><span class="line">dropbox: setting home path <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143'</span></span><br><span class="line">dropbox: setting python path <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143:/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/python-packages-37.zip'</span></span><br><span class="line">dropbox: python initialized</span><br><span class="line">dropbox: running dropbox</span><br><span class="line">dropbox: setting args</span><br><span class="line">dropbox: applying overrides</span><br><span class="line">dropbox: running main script</span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/cryptography.hazmat.bindings._constant_time.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/cryptography.hazmat.bindings._openssl.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/cryptography.hazmat.bindings._padding.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/psutil._psutil_linux.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/psutil._psutil_posix.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/linuxffi.pthread._linuxffi_pthread.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/cpuid.compiled._cpuid.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/tornado.speedups.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/apex._apex.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/linuxffi.resolv.compiled._linuxffi_resolv.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/librsyncffi.compiled._librsyncffi.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/linuxffi.sys.compiled._linuxffi_sys.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/posixffi.libc._posixffi_libc.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/linuxffi.gnu.compiled._linuxffi_gnu.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line"> Dropbox ...</span><br><span class="line"> https://www.dropbox.com/cli_link_nonce?nonce=5f30616049d385497f188f52421b38a6</span><br><span class="line"> Dropbox ...</span><br><span class="line"> https://www.dropbox.com/cli_link_nonce?nonce=5f30616049d385497f188f52421b38a6</span><br><span class="line"> Dropbox ...</span><br><span class="line"> https://www.dropbox.com/cli_link_nonce?nonce=5f30616049d385497f188f52421b38a6</span><br><span class="line"> Dropbox ...</span><br><span class="line"> https://www.dropbox.com/cli_link_nonce?nonce=5f30616049d385497f188f52421b38a6</span><br><span class="line"> Dropbox ...</span><br><span class="line"> https://www.dropbox.com/cli_link_nonce?nonce=5f30616049d385497f188f52421b38a6</span><br><span class="line"> Dropbox ...</span><br><span class="line"> https://www.dropbox.com/cli_link_nonce?nonce=5f30616049d385497f188f52421b38a6</span><br><span class="line"> Dropbox ...</span><br><span class="line"> https://www.dropbox.com/cli_link_nonce?nonce=5f30616049d385497f188f52421b38a6</span><br><span class="line"> Dropbox ...</span><br><span class="line"> https://www.dropbox.com/cli_link_nonce?nonce=5f30616049d385497f188f52421b38a6</span><br><span class="line"> Dropbox ...</span><br><span class="line"> https://www.dropbox.com/cli_link_nonce?nonce=5f30616049d385497f188f52421b38a6</span><br><span class="line"> Dropbox ...</span><br><span class="line"> https://www.dropbox.com/cli_link_nonce?nonce=5f30616049d385497f188f52421b38a6</span><br><span class="line"> Dropbox  xxxx xxxx</span><br></pre></td></tr></table></figure>
+<p>这里当我们看到：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Dropbox ...</span><br><span class="line"> https://www.dropbox.com/cli_link_nonce?nonce=5f30616049d385497f188f52421b38a6</span><br></pre></td></tr></table></figure>
+<p>出现时，需要将这个网址复制出来，粘贴到浏览器中访问，绑定设备到Dropbox</p>
+<p>然后就会看到最后一条 <strong>Dropbox xxxx xxxx</strong> ，这里的 <strong>xxxx xxxx</strong> 是你的账号信息。</p>
+<p>最后一步我们需要使用官方提供的<strong>python</strong>脚本来启动<strong>Dropbox</strong></p>
+<h4 id="启动Dropbox"><a href="#启动Dropbox" class="headerlink" title="启动Dropbox"></a>启动Dropbox</h4><p>打开网址： <a href="https://www.dropbox.com/install-linux" target="_blank" rel="noopener">https://www.dropbox.com/install-linux</a></p>
+<p>在最下面找到 <strong>Python 脚本</strong> 的超链接，点击下载，或者直接访问这个网址：</p>
+<p><a href="https://www.dropbox.com/download?dl=packages/dropbox.py" target="_blank" rel="noopener">https://www.dropbox.com/download?dl=packages/dropbox.py</a></p>
+<p>或许你还可以使用 <strong>wget</strong> 之类的命令行工具下载这个脚本</p>
+<p>下一步我们使用 <strong>python3</strong> 来执行这个脚本，注意，我们系统是<strong>Ubuntu 16.04</strong>，幸运的是系统自带 <strong>python3</strong> 直接使用就行，如果你的系统不是自带 <strong>python3</strong> 的，那么将你的系统改为 <strong>Ubuntu 16.04</strong>，因为其他版本的<strong>Ubuntu</strong>安装不上<strong>Dropbox</strong>。这个比较遗憾。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster:~<span class="comment"># python3 dropbox.py help</span></span><br><span class="line">Dropbox <span class="built_in">command</span>-line interface</span><br><span class="line"></span><br><span class="line">commands:</span><br><span class="line"></span><br><span class="line">Note: use dropbox <span class="built_in">help</span> &lt;<span class="built_in">command</span>&gt; to view usage <span class="keyword">for</span> a specific <span class="built_in">command</span>.</span><br><span class="line"></span><br><span class="line"> autostart    automatically start Dropbox at login</span><br><span class="line"> exclude      ignores/excludes a directory from syncing</span><br><span class="line"> filestatus   get current sync status of one or more files</span><br><span class="line"> <span class="built_in">help</span>         provide <span class="built_in">help</span></span><br><span class="line"> lansync      enables or disables LAN sync</span><br><span class="line"> ls           list directory contents with current sync status</span><br><span class="line"> proxy        <span class="built_in">set</span> proxy settings <span class="keyword">for</span> Dropbox</span><br><span class="line"> puburl       get public url of a file <span class="keyword">in</span> your Dropbox<span class="string">'s public folder</span></span><br><span class="line"><span class="string"> running      return whether Dropbox is running</span></span><br><span class="line"><span class="string"> sharelink    get a shared link for a file in your Dropbox</span></span><br><span class="line"><span class="string"> start        start dropboxd</span></span><br><span class="line"><span class="string"> status       get current status of the dropboxd</span></span><br><span class="line"><span class="string"> stop         stop dropboxd</span></span><br><span class="line"><span class="string"> throttle     set bandwidth limits for Dropbox</span></span><br><span class="line"><span class="string"> update       download latest version of Dropbox</span></span><br><span class="line"><span class="string"> version      print version information for Dropbox</span></span><br></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># python3 dropbox.py start</span></span><br><span class="line">Starting Dropbox...dropbox: locating interpreter</span><br><span class="line">dropbox: logging to /tmp/dropbox-antifreeze-107MZM</span><br><span class="line">dropbox: initializing</span><br><span class="line">dropbox: initializing python 3.7.2</span><br><span class="line">dropbox: setting program path <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/dropbox'</span></span><br><span class="line">dropbox: setting home path <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143'</span></span><br><span class="line">dropbox: setting python path <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143:/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/python-packages-37.zip'</span></span><br><span class="line">dropbox: python initialized</span><br><span class="line">dropbox: running dropbox</span><br><span class="line">dropbox: setting args</span><br><span class="line">dropbox: applying overrides</span><br><span class="line">dropbox: running main script</span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/cryptography.hazmat.bindings._constant_time.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/cryptography.hazmat.bindings._openssl.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/cryptography.hazmat.bindings._padding.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/psutil._psutil_linux.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/psutil._psutil_posix.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/linuxffi.pthread._linuxffi_pthread.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/cpuid.compiled._cpuid.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/tornado.speedups.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/apex._apex.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/linuxffi.resolv.compiled._linuxffi_resolv.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/librsyncffi.compiled._librsyncffi.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/linuxffi.sys.compiled._linuxffi_sys.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/posixffi.libc._posixffi_libc.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">dropbox: load fq extension <span class="string">'/root/.dropbox-dist/dropbox-lnx.x86_64-79.4.143/linuxffi.gnu.compiled._linuxffi_gnu.cpython-37m-x86_64-linux-gnu.so'</span></span><br><span class="line">Done!</span><br><span class="line">root@hot-cluster-1:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>看到 <strong>Done！</strong>就说明运行成功了，可以用 <strong>python3 dropbox.py status</strong> 来查看状态。</p>
+<h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><p><strong>dropbox</strong> 安装完了，不用等，接下来我们安装docker，这个可爱的小鲸鱼🐳，是我们接下来跑<strong>efb</strong>的重要工具。因为<strong>efb</strong>是<strong>docker</strong>版的。</p>
+<ul>
+<li>设置源</li>
+<li>安装<strong>docker</strong></li>
+<li><strong>test docker</strong></li>
+</ul>
+<h4 id="设置源"><a href="#设置源" class="headerlink" title="设置源"></a>设置源</h4><ol>
+<li><p>更新apt包索引</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>安装包允许apt通过https来使用存储库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    gnupg-agent \</span><br><span class="line">    software-properties-common</span><br></pre></td></tr></table></figure>
+<p>直接copy执行就行</p>
+</li>
+<li><p>添加<strong>docker</strong>官方的<strong>GPG</strong>密钥</p>
+<p>添加密钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br></pre></td></tr></table></figure>
+<p>然后在执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-key fingerprint 0EBFCD88</span><br></pre></td></tr></table></figure>
+<p>看到如下结果就是成功的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pub   rsa4096 2017-02-22 [SCEA]</span><br><span class="line">      9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88</span><br><span class="line">uid           [ unknown] Docker Release (CE deb) &lt;docker@docker.com&gt;</span><br><span class="line">sub   rsa4096 2017-02-22 [S]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>添加源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository \</span><br><span class="line">   <span class="string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="variable">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable"</span></span><br></pre></td></tr></table></figure>
+<p>直接复制到终端执行就行。</p>
+</li>
+<li><p>更新包索引</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>安装<strong>docker</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
+<p>安装完成之后在安装 <strong>docker-compose</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install docker-compose</span><br></pre></td></tr></table></figure>
+<p>这样docker就安装完成了。</p>
+</li>
+</ol>
+<h2 id="配置-EH-Forwarder-Bot"><a href="#配置-EH-Forwarder-Bot" class="headerlink" title="配置 EH Forwarder Bot"></a>配置 <strong>EH Forwarder Bot</strong></h2><p>接下来配置 <strong>EFB</strong>，我们使用的版本是<strong>2.0</strong>的版本，<strong>docker</strong>镜像选择的是 <strong><a href="https://hub.docker.com/r/akyakya/efb-v2" target="_blank" rel="noopener">akayakya</a></strong> 的。</p>
+<ul>
+<li>创建配置文件目录结构和文件</li>
+<li>创建<strong>telegram bot</strong></li>
+<li><strong>yaml</strong> 配置</li>
+<li>启动<strong>EFB</strong>服务</li>
+<li>连接<strong>微信</strong></li>
+</ul>
+<h4 id="创建配置文件目录结构和文件"><a href="#创建配置文件目录结构和文件" class="headerlink" title="创建配置文件目录结构和文件"></a>创建配置文件目录结构和文件</h4><p>先来看下结构树🌲长啥样：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~/Dropbox/docker_application<span class="comment"># tree</span></span><br><span class="line">.</span><br><span class="line">`-- efb_v2</span><br><span class="line">    |-- blueset.telegram</span><br><span class="line">    |   |-- config.yaml</span><br><span class="line">    |   `-- tgdata.db</span><br><span class="line">    |-- blueset.wechat</span><br><span class="line">    |   |-- config.yaml</span><br><span class="line">    |   |-- wxpy.pkl</span><br><span class="line">    |   `-- wxpy_puid.pkl</span><br><span class="line">    |-- config.yaml</span><br><span class="line">    `-- docker-compose.yml</span><br><span class="line"></span><br><span class="line">3 directories, 7 files</span><br></pre></td></tr></table></figure>
+<p>这里说明一下，<strong>.pkl</strong> 结尾的文件是自动生成的。我们仅仅需要创建 <strong>.yaml</strong> | <strong>.yml</strong> 三种文件格式的文件。</p>
+<p>上面我们安装了Dropbox，为了方便操作，将目录创建在Dropbox 的目录下，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># cd Dropbox/</span></span><br><span class="line">root@hot-cluster-1:~/Dropbox<span class="comment"># mkdir -p docker_application^C</span></span><br><span class="line">root@hot-cluster-1:~/Dropbox<span class="comment"># ls</span></span><br><span class="line">20181110-?????????????????????  20190225-????????????  docker_application  dropbox.py  workspace</span><br><span class="line">root@hot-cluster-1:~/Dropbox<span class="comment"># cd docker_application/</span></span><br><span class="line">root@hot-cluster-1:~/Dropbox/docker_application<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p><strong>Docker_application</strong> 目录就专门用来存放一些<strong>docker</strong>镜像的<strong>yml</strong>文件吧。</p>
+<p>接着，再创建<strong>efb_v2</strong>目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~/Dropbox/docker_application<span class="comment"># mkdir -p efb_2v</span></span><br><span class="line">root@hot-cluster-1:~/Dropbox/docker_application<span class="comment"># ls</span></span><br><span class="line">efb_v2</span><br><span class="line">root@hot-cluster-1:~/Dropbox/docker_application<span class="comment"># cd efb_v2/</span></span><br><span class="line">root@hot-cluster-1:~/Dropbox/docker_application/efb_v2<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>创建<strong>blueset.telegram</strong> 目录和<strong>blueset.wechat</strong> 目录，<strong>docker-compose.yml</strong>，<strong>config.yaml</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~/Dropbox/docker_application/efb_v2<span class="comment"># mkdir -p blueset.telegram</span></span><br><span class="line">root@hot-cluster-1:~/Dropbox/docker_application/efb_v2<span class="comment"># mkdir -p blueset.wechat</span></span><br><span class="line">root@hot-cluster-1:~/Dropbox/docker_application/efb_v2<span class="comment"># touch config.yaml docker-compose.yml blueset.telegram/config.yaml blueset.wechat/config.yaml</span></span><br><span class="line">root@hot-cluster-1:~/Dropbox/docker_application/efb_v2<span class="comment"># ls</span></span><br><span class="line">blueset.telegram  blueset.wechat  config.yaml  docker-compose.yml</span><br><span class="line">root@hot-cluster-1:~/Dropbox/docker_application/efb_v2<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>这里注意<strong>docker-compose</strong>字母不要拼写错误。分别为<strong>blueset.telegram</strong> 和<strong>blueset.wechat</strong>目录下创建对应的配置文件。</p>
+<h4 id="创建Telegram-bot"><a href="#创建Telegram-bot" class="headerlink" title="创建Telegram bot"></a>创建Telegram bot</h4><p>打开Telegram, <strong>@BotFather</strong>，输入 <strong>/newbot</strong> 创建一个bot，bot的名称需要以 <strong>_bot</strong> 作为结尾，这里做个小小的演示。</p>
+<p><img src="/images/image-20190821141127861.png" alt="image-20190821141127861"></p>
+<p>到这步，我们就可以得到一个token了<strong>957778340:AAHXUvCWeqG-b6DXdkYOnukHWTvqhjYi9LE</strong></p>
+<p>接下来设置bot的命令：输入 <strong>/setcommands</strong> ，然后选择你刚创建的bot</p>
+<p><img src="/images/image-20190821141326574.png" alt="image-20190821141326574"></p>
+<p>输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">link - 将会话绑定到 Telegram 群组</span><br><span class="line">chat - 生成会话头</span><br><span class="line">recog - 回复语音消息以进行识别</span><br><span class="line">extra - 获取更多功能</span><br></pre></td></tr></table></figure>
+<p>看到 <strong>Success! Command list updated. /help</strong>，说明设置成功。</p>
+<p>然后配置<strong>privacy</strong>， 输入命令 <strong>/setprivacy</strong>, 选择刚创建的bot，然后选择<strong>disable</strong></p>
+<h4 id="yaml-配置"><a href="#yaml-配置" class="headerlink" title="yaml 配置"></a>yaml 配置</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># config.yaml</span></span><br><span class="line"><span class="attr">master_channel:</span> <span class="string">blueset.telegram</span></span><br><span class="line"><span class="attr">slave_channels:</span></span><br><span class="line"><span class="bullet"> -</span> <span class="string">blueset.wechat</span></span><br><span class="line"><span class="attr">middlewares:</span></span><br><span class="line"><span class="comment"># - catbaron.sticker2img</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"><span class="attr">efb_v2:</span></span><br><span class="line"><span class="attr">  image:</span> <span class="string">akyakya/efb-v2:latest</span></span><br><span class="line"><span class="attr">  container_name:</span> <span class="string">efb_v2</span></span><br><span class="line"><span class="attr">  restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">  volumes:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">.:/root/.ehforwarderbot/profiles/default/</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/etc/localtime:/etc/localtime:ro</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/etc/timezone:/etc/timezone:ro</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># blueset.telegram/config.yaml</span></span><br><span class="line"><span class="attr">token:</span> <span class="string">"xxxxxxxxx:xxxxxxxxxxxx"</span> <span class="comment">#换成自己的bot token</span></span><br><span class="line"><span class="attr">admins:</span> </span><br><span class="line"><span class="bullet"> -</span> <span class="string">xxxxxxxx</span> <span class="comment">#换成自己的telegram 数字id</span></span><br><span class="line"><span class="attr">flags:</span></span><br><span class="line"><span class="attr">    chats_per_page:</span> <span class="number">20</span> <span class="comment">#选择/ chat和/ link命令时显示的聊天次数。过大的值可能导致这些命令的故障</span></span><br><span class="line"><span class="attr">    network_error_prompt_interval:</span> <span class="number">100</span> <span class="comment">#每收到n个错误后再通知用户有关网络错误的信息。 设置为0可禁用它</span></span><br><span class="line"><span class="attr">    multiple_slave_chats:</span> <span class="literal">true</span> <span class="comment">#默认true #将多个远程聊天链接到一个Telegram组。使用未关联的聊天功能发送和回复。禁用以远程聊天和电报组一对一链接。</span></span><br><span class="line"><span class="attr">    prevent_message_removal:</span> <span class="literal">true</span>  <span class="comment">#当从通道需要删除消息时，如果此值为true，EFB将忽略该请求。</span></span><br><span class="line"><span class="attr">    auto_locale:</span> <span class="literal">true</span> <span class="comment">#自动从管理员的消息中检测区域设置。否则将使用在环境变量中定义的区域设置。</span></span><br><span class="line"><span class="attr">    retry_on_error:</span> <span class="literal">false</span> <span class="comment">#在向Telegram Bot API发送请求时发生错误时无限重试。请注意，这可能会导致重复的消息传递，因为Telegram Bot API的响应不可靠，并且可能无法反映实际结果</span></span><br><span class="line"><span class="attr">    message_muted_on_slave:</span> <span class="string">normal</span> <span class="comment">#normal:作为普通信息发送给Telegram silent:发送给Telegram作为正常消息，但没有通知声音 mute:不要发送给Telegram</span></span><br><span class="line"><span class="attr">    your_message_on_slave:</span> <span class="string">silent</span> <span class="comment">#在从属通道平台上收到消息时的行为。这将覆盖message_muted_on_slave中的设置。</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># blueset.wechat/config.yaml</span></span><br><span class="line"><span class="comment"># 实验功能</span></span><br><span class="line"><span class="comment"># # 使用本段来调整实验功能的设置。请注意实验功能随时可能变更或失效。</span></span><br><span class="line"><span class="comment"># # 详细说明见下文。</span></span><br><span class="line"><span class="attr">flags:</span></span><br><span class="line"><span class="attr">    refresh_friends:</span> <span class="literal">false</span> <span class="comment">#每当请求会话列表时，强制刷新会话列表。[默认值: false]</span></span><br><span class="line"><span class="attr">    first_link_only:</span> <span class="literal">false</span> <span class="comment">#在收到多链接消息时，仅发送第一条链接。默认多链接会发送多条消息。 [默认值: false]</span></span><br><span class="line"><span class="attr">    max_quote_length:</span> <span class="bullet">-1</span> <span class="comment">#引用消息中引文的长度限制。设置为 0 关闭引文功能。设置为 -1 则对引文长度不做限制。max_quote_length (int) [默认值: -1]</span></span><br><span class="line"><span class="attr">    qr_reload:</span> <span class="string">"master_qr_code"</span> <span class="comment"># "console_qr_code": 将二维码和提示输出到系统标准输出（stdout）。"master_qr_code": 将二维码和提示发送到主端。[默认值: "master_qr_code"]</span></span><br><span class="line"><span class="attr">    on_log_out:</span> <span class="string">"command"</span> <span class="comment">#微信服务器将用户登出时的操作。 选项:"idle": 仅通知用户。"reauth": 通知用户，并立即开始重新登录。"command": 通知用户，并等待用户启动重新登录过程。[默认值: "command"]</span></span><br><span class="line"><span class="attr">    imgcat_qr:</span> <span class="literal">false</span> <span class="comment">#使用 iTerm2 图像协议 显示二维码。本功能只适用于 iTerm2 用户。[默认值: false]</span></span><br><span class="line"><span class="attr">    delete_on_edit:</span> <span class="literal">true</span> <span class="comment">#以撤回并重新发送的方式代替编辑消息。默认禁止编辑消息。 [默认值: false]</span></span><br><span class="line"><span class="attr">    app_shared_link_mode:</span> <span class="string">"ignore"</span> <span class="comment">#在收到第三方合作应用分享给微信的链接时，其附带的预览图以何种形式发送。"ignore"：忽略附带的缩略图"upload"：将缩略图上传到公开图床（https://sm.ms），并在日志中输出图片的删除链接。"image"：将消息以图片形式发送（不推荐）[默认值："ignore"]</span></span><br><span class="line"><span class="attr">    puid_logs:</span> <span class="literal">null</span> <span class="comment">#输出 PUID 相关日志到指定日志路径。请使用绝对路径。PUID 日志可能会根据会话数量和消息吞吐量 而占用大量存储空间。</span></span><br><span class="line"><span class="attr">    send_stickers_and_gif_as_jpeg:</span> <span class="literal">false</span> <span class="comment">#以 JPEG 图片方式发送自定义表情和 GIF，用于临时绕过微信网页版的自定义表情限制。[默认值: true]</span></span><br></pre></td></tr></table></figure>
+<h4 id="启动EFB服务"><a href="#启动EFB服务" class="headerlink" title="启动EFB服务"></a>启动<strong>EFB</strong>服务</h4><p>配置文件写完之后，我们需要启动这个服务。移动到 <strong>docker-compose.yml</strong> 的目录下，使用如下命令下载运行该镜像：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~/Dropbox/docker_application/efb_v2<span class="comment"># docker-compose up -d</span></span><br></pre></td></tr></table></figure>
+<p>这样就可以了，如果你对docker感兴趣，可以去官网看看其他的操作。然后我们下一步，接入我们的微信。</p>
+<h4 id="连接微信"><a href="#连接微信" class="headerlink" title="连接微信"></a>连接<strong>微信</strong></h4><blockquote>
+<p>接入这个微信的原理，其实是使用efb去登录了我们的网页版微信，然后所有的信息都会发到efb中，由efb处理之后才会让你在Telegram客户端看到内容，你可以使用Telegram去回复微信，创建分组各种。</p>
+</blockquote>
+<p>我们需要查看docker镜像的日志，获取到登录网页微信的二维码或者网址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~/Dropbox/docker_application/efb_v2<span class="comment"># docker-compose logs</span></span><br></pre></td></tr></table></figure>
+<p>手机打开微信，等日志加载完后，扫描最后一个二维码，点击登录即可。这样你就可以在 <strong>@testefb111_bot</strong> 这个 <strong>chat</strong> 中收到微信的聊天消息，<strong>reply</strong> 即可回复消息。</p>
+<h2 id="安装配置ssmgr"><a href="#安装配置ssmgr" class="headerlink" title="安装配置ssmgr"></a>安装配置ssmgr</h2><p>有了vps 没有ss就太可怜了，经过卢大佬的安利，我选择 <a href="https://shadowsocks.github.io/shadowsocks-manager/#/home" target="_blank" rel="noopener">ssmgr</a> 来作为ss管理后台，这里选择普通安装方式。</p>
+<ul>
+<li>安装 shadowsocks</li>
+<li>安装 node.js 10.x</li>
+<li>安装 Redis 并设置密码</li>
+<li>安装 ssmgr</li>
+</ul>
+<h4 id="安装-shadowsocks"><a href="#安装-shadowsocks" class="headerlink" title="安装 shadowsocks"></a>安装 shadowsocks</h4><blockquote>
+<p>可以采用<code>libev</code>或<code>python</code>版本</p>
+</blockquote>
+<p>这里我们选择python版本吧，毕竟系统默认就带了个python3。</p>
+<ul>
+<li>安装 pip</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># apt install python3-pip</span></span><br><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree</span><br><span class="line">Reading state information... Done</span><br><span class="line"><span class="comment"># ......</span></span><br><span class="line">After this operation, 201 MB of additional disk space will be used.</span><br><span class="line">Do you want to <span class="built_in">continue</span>? [Y/n] Y <span class="comment"># 输入 Y</span></span><br><span class="line"><span class="comment"># ......</span></span><br><span class="line">Setting up python3-pip (8.1.1-2ubuntu0.4) ...</span><br><span class="line">Setting up python3-setuptools (20.7.0-1) ...</span><br><span class="line">Setting up python3-wheel (0.29.0-1) ...</span><br><span class="line">Processing triggers <span class="keyword">for</span> libc-bin (2.23-0ubuntu11) ...</span><br><span class="line">root@hot-cluster-1:~<span class="comment"># pip3 -V</span></span><br><span class="line">pip 8.1.1 from /usr/lib/python3/dist-packages (python 3.5)</span><br><span class="line">root@hot-cluster-1:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>这样就安装好了！下面安装 shadowsocks</p>
+<ul>
+<li>安装 shadowsocks</li>
+</ul>
+<blockquote>
+<p>因Shadowsocks作者不再维护<code>pip</code>中的Shadowsocks（定格在了2.8.2）, 我们使用下面的命令来安装最新版的Shadowsocks</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># pip3 install https://github.com/shadowsocks/shadowsocks/archive/master.zip</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"/usr/bin/pip3"</span>, line 11, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    sys.exit(main())</span><br><span class="line">  File <span class="string">"/usr/lib/python3/dist-packages/pip/__init__.py"</span>, line 215, <span class="keyword">in</span> main</span><br><span class="line">    locale.setlocale(locale.LC_ALL, <span class="string">''</span>)</span><br><span class="line">  File <span class="string">"/usr/lib/python3.5/locale.py"</span>, line 594, <span class="keyword">in</span> setlocale</span><br><span class="line">    <span class="built_in">return</span> _setlocale(category, locale)</span><br><span class="line">locale.Error: unsupported locale setting</span><br></pre></td></tr></table></figure>
+<p>来了个小惊喜，解决方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># export LC_ALL=C</span></span><br></pre></td></tr></table></figure>
+<p>再次安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># pip3 install https://github.com/shadowsocks/shadowsocks/archive/master.zip</span></span><br><span class="line">Collecting https://github.com/shadowsocks/shadowsocks/archive/master.zip</span><br><span class="line">  Downloading https://github.com/shadowsocks/shadowsocks/archive/master.zip (115kB)</span><br><span class="line">    100% |<span class="comment">################################| 122kB 342kB/s</span></span><br><span class="line">Installing collected packages: shadowsocks</span><br><span class="line">  Running setup.py install <span class="keyword">for</span> shadowsocks ... <span class="keyword">done</span></span><br><span class="line">Successfully installed shadowsocks-3.0.0</span><br><span class="line">You are using pip version 8.1.1, however version 19.2.2 is available.</span><br><span class="line">You should consider upgrading via the <span class="string">'pip install --upgrade pip'</span> <span class="built_in">command</span>.</span><br><span class="line">root@hot-cluster-1:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>看到 <strong>Successfully installed shadowsocks-XXX</strong> 就是安装成功了。</p>
+<ul>
+<li>创建配置文件</li>
+</ul>
+<p>在 /etc 目录下创建 shadowsocks 配置文件所在目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># mkdir /etc/shadowsocks</span></span><br><span class="line">root@hot-cluster-1:~<span class="comment"># cd /etc/shadowsocks</span></span><br><span class="line">root@hot-cluster-1:~<span class="comment"># touch config.json</span></span><br></pre></td></tr></table></figure>
+<p>使用 vim 编辑 <strong>config.json</strong> 粘贴一下内容，注意修改 password</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"server"</span>:<span class="string">"::"</span>,</span><br><span class="line">    <span class="attr">"server_port"</span>:<span class="number">8388</span>,</span><br><span class="line">    <span class="attr">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">    <span class="attr">"local_port"</span>:<span class="number">1080</span>,</span><br><span class="line">    <span class="attr">"password"</span>:<span class="string">"mypassword"</span>,</span><br><span class="line">    <span class="attr">"timeout"</span>:<span class="number">300</span>,</span><br><span class="line">    <span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span>,</span><br><span class="line">    <span class="attr">"fast_open"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完成之后测试一下看看能不能用。</p>
+<ul>
+<li>测试 shadowsocks 配置</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># ssserver -c /etc/shadowsocks/config.json</span></span><br><span class="line">INFO: loading config from /etc/shadowsocks/config.json</span><br><span class="line">2019-08-21 03:15:24 INFO     loading libcrypto from libcrypto.so.1.0.0</span><br><span class="line">2019-08-21 03:15:24 INFO     starting server at :::8388</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置 Systemd 来管理 shadowsocks</li>
+</ul>
+<p>测试通过后，我们将shadowsocks 做为一个服务来启动，这样的话比较方便。</p>
+<ol>
+<li>创建 service 文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># vim /etc/systemd/system/shadowsocks-server.service</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>编写服务内容: shadowsocks-server.service</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Shadowsocks Server</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStart=/usr/local/bin/ssserver -c /etc/shadowsocks/config.json</span><br><span class="line">Restart=on-abort</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<ol>
+<li>启动服务</li>
+</ol>
+<p>启动Shadowsocks:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># systemctl start shadowsocks-server.service</span></span><br></pre></td></tr></table></figure>
+<p>设置开机启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># systemctl enable shadowsocks-server.service</span></span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/shadowsocks-server.service to /etc/systemd/system/shadowsocks-server.service.</span><br><span class="line">root@hot-cluster-1:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>到此 shadowsocks 安装配置完毕，如果有进阶优化的需求的话，可以看下面的这个文章：</p>
+<p><a href="https://www.polarxiong.com/archives/Ubuntu-16-04%E4%B8%8BShadowsocks%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BC%98%E5%8C%96.html" target="_blank" rel="noopener">https://www.polarxiong.com/archives/Ubuntu-16-04%E4%B8%8BShadowsocks%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BC%98%E5%8C%96.html</a></p>
+<h4 id="安装-node-js-10-x"><a href="#安装-node-js-10-x" class="headerlink" title="安装 node.js 10.x"></a>安装 node.js 10.x</h4><blockquote>
+<p>建议使用<a href="https://github.com/nodesource/distributions" target="_blank" rel="noopener"><code>nodesource</code></a>里边的方式安装</p>
+</blockquote>
+<p>Ssmgr 官方推荐我们用 <a href="https://github.com/nodesource/distributions" target="_blank" rel="noopener">nodesource</a> 方式来安装，点开看下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Installing the NodeSource Node.js 10.x repo...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## Populating apt-get cache...</span></span><br><span class="line"></span><br><span class="line">+ apt-get update</span><br><span class="line">Hit:1 http://us.archive.ubuntu.com/ubuntu xenial InRelease</span><br><span class="line">Get:2 http://us.archive.ubuntu.com/ubuntu xenial-updates InRelease [109 kB]</span><br><span class="line"></span><br><span class="line"><span class="comment"># ......</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Run `sudo apt-get install -y nodejs` to install Node.js 10.x and npm</span></span><br><span class="line"><span class="comment">## You may also need development tools to build native addons:</span></span><br><span class="line">     sudo apt-get install gcc g++ make</span><br><span class="line"><span class="comment">## To install the Yarn package manager, run:</span></span><br><span class="line">     curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -</span><br><span class="line">     <span class="built_in">echo</span> <span class="string">"deb https://dl.yarnpkg.com/debian/ stable main"</span> | sudo tee /etc/apt/sources.list.d/yarn.list</span><br><span class="line">     sudo apt-get update &amp;&amp; sudo apt-get install yarn</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">root@hot-cluster-1:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>我们直接找到<strong>readme</strong> 中关于 <strong>Node.js v10.x</strong> 安装的部分，选择<strong>Using Ubuntu</strong>的内容</p>
+<p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># apt install nodejs -y</span></span><br><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree</span><br><span class="line">Reading state information... Done</span><br><span class="line">The following NEW packages will be installed:</span><br><span class="line">  nodejs</span><br><span class="line">0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.</span><br><span class="line">Need to get 15.8 MB of archives.</span><br><span class="line">After this operation, 76.5 MB of additional disk space will be used.</span><br><span class="line">Get:1 https://deb.nodesource.com/node_10.x xenial/main amd64 nodejs amd64 10.16.3-1nodesource1 [15.8 MB]</span><br><span class="line">Fetched 15.8 MB <span class="keyword">in</span> 3s (4951 kB/s)</span><br><span class="line">Selecting previously unselected package nodejs.</span><br><span class="line">(Reading database ... 99725 files and directories currently installed.)</span><br><span class="line">Preparing to unpack .../nodejs_10.16.3-1nodesource1_amd64.deb ...</span><br><span class="line">Unpacking nodejs (10.16.3-1nodesource1) ...</span><br><span class="line">Processing triggers <span class="keyword">for</span> man-db (2.7.5-1) ...</span><br><span class="line">Setting up nodejs (10.16.3-1nodesource1) ...</span><br></pre></td></tr></table></figure>
+<p>验证一下是否安装成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># node -v</span></span><br><span class="line">v10.16.3</span><br><span class="line">root@hot-cluster-1:~<span class="comment"># npm -v</span></span><br><span class="line">6.9.0</span><br><span class="line">root@hot-cluster-1:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>下一步走着。</p>
+<h4 id="安装-Redis-并设置密码"><a href="#安装-Redis-并设置密码" class="headerlink" title="安装 Redis 并设置密码"></a>安装 Redis 并设置密码</h4><p>安装Redis，ssmgr 的文档同样没有给详细的文档。我们可以点击<a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-redis-on-ubuntu-16-04" target="_blank" rel="noopener">这里</a>查看, 或者我们直接 <a href="https://tecadmin.net/install-redis-ubuntu/" target="_blank" rel="noopener">apt 安装</a> </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># apt update</span></span><br><span class="line">root@hot-cluster-1:~<span class="comment"># apt install redis-server</span></span><br><span class="line">root@hot-cluster-1:~<span class="comment"># systemctl enable redis-server.service</span></span><br></pre></td></tr></table></figure>
+<p>上面，我们安装了redis-server 并且，将他设置为开机启动的服务了，下面我们来配置redis</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># vim /etc/redis/redis.conf</span></span><br></pre></td></tr></table></figure>
+<h4 id="安装-ssmgr"><a href="#安装-ssmgr" class="headerlink" title="安装 ssmgr"></a>安装 ssmgr</h4><p>上面的准备工作都做完了，我们仅仅需要安装 ssmgr 就行了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@hot-cluster-1:~<span class="comment"># npm i -g shadowsocks-manager --unsafe-perm</span></span><br></pre></td></tr></table></figure>
+<p>配置方面，官方写的比较完整：</p>
+<blockquote>
+<p><a href="https://shadowsocks.github.io/shadowsocks-manager/#/config?id=%E9%85%8D%E7%BD%AE%E9%A6%96%E4%B8%AA%E8%8A%82%E7%82%B9" target="_blank" rel="noopener">https://shadowsocks.github.io/shadowsocks-manager/#/config?id=%E9%85%8D%E7%BD%AE%E9%A6%96%E4%B8%AA%E8%8A%82%E7%82%B9</a></p>
+</blockquote>
+<p>over</p>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/VPS/" rel="tag"># VPS</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/hello-world/" rel="next" title="Hello World">
+                  <i class="fa fa-chevron-left"></i> Hello World
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/FrontEnd/fix-hexo-cant-render-mathematical-formula/" rel="prev" title="hexo 静态博客不能渲染数学公式问题">
+                  hexo 静态博客不能渲染数学公式问题 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh无密登录"><span class="nav-number">2.</span> <span class="nav-text">ssh无密登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置nginx二级域名分发"><span class="nav-number">3.</span> <span class="nav-text">配置nginx二级域名分发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装nginx"><span class="nav-number">3.1.</span> <span class="nav-text">安装nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-状态变更"><span class="nav-number">3.2.</span> <span class="nav-text">nginx 状态变更</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-配置"><span class="nav-number">3.3.</span> <span class="nav-text">nginx 配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Dropbox"><span class="nav-number">4.</span> <span class="nav-text">安装Dropbox</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载-Dropbox"><span class="nav-number">4.0.1.</span> <span class="nav-text">下载 Dropbox</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行-Dropbox-守护程序"><span class="nav-number">4.0.2.</span> <span class="nav-text">运行 Dropbox 守护程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动Dropbox"><span class="nav-number">4.0.3.</span> <span class="nav-text">启动Dropbox</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装docker"><span class="nav-number">5.</span> <span class="nav-text">安装docker</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置源"><span class="nav-number">5.0.1.</span> <span class="nav-text">设置源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-EH-Forwarder-Bot"><span class="nav-number">6.</span> <span class="nav-text">配置 EH Forwarder Bot</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建配置文件目录结构和文件"><span class="nav-number">6.0.1.</span> <span class="nav-text">创建配置文件目录结构和文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建Telegram-bot"><span class="nav-number">6.0.2.</span> <span class="nav-text">创建Telegram bot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yaml-配置"><span class="nav-number">6.0.3.</span> <span class="nav-text">yaml 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动EFB服务"><span class="nav-number">6.0.4.</span> <span class="nav-text">启动EFB服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#连接微信"><span class="nav-number">6.0.5.</span> <span class="nav-text">连接微信</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装配置ssmgr"><span class="nav-number">7.</span> <span class="nav-text">安装配置ssmgr</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-shadowsocks"><span class="nav-number">7.0.1.</span> <span class="nav-text">安装 shadowsocks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-node-js-10-x"><span class="nav-number">7.0.2.</span> <span class="nav-text">安装 node.js 10.x</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Redis-并设置密码"><span class="nav-number">7.0.3.</span> <span class="nav-text">安装 Redis 并设置密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-ssmgr"><span class="nav-number">7.0.4.</span> <span class="nav-text">安装 ssmgr</span></a></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">comeriven</p>
+  <div class="site-description" itemprop="description">而今千里無書信，空待枝頭燕傳歌</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">comeriven</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
