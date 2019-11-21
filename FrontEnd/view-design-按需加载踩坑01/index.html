@@ -54,16 +54,19 @@
   };
 </script>
 
-  <meta name="keywords" content="tmpfile">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="https://blog.flyriven.com/tags/index.html">
+  <meta name="description" content="问题配置了按需加载后，发现存在非Template中使用的组件，比如Message、LoadingBar这种，无法使用Vue.component(‘Message’, Message) 来全局注册。 解决方法：123456// main.js import &amp;#123; Message &amp;#125; from &apos;view-design&apos;Vue.prototype.$Message = Message">
+<meta name="keywords" content="tmpfile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="view-design 按需加载踩坑01">
+<meta property="og:url" content="https://blog.flyriven.com/FrontEnd/view-design-按需加载踩坑01/index.html">
 <meta property="og:site_name" content="Tmpfile&#39;s Blog">
+<meta property="og:description" content="问题配置了按需加载后，发现存在非Template中使用的组件，比如Message、LoadingBar这种，无法使用Vue.component(‘Message’, Message) 来全局注册。 解决方法：123456// main.js import &amp;#123; Message &amp;#125; from &apos;view-design&apos;Vue.prototype.$Message = Message">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-27T16:11:27.216Z">
+<meta property="og:updated_time" content="2019-11-21T10:13:18.928Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-  <link rel="canonical" href="https://blog.flyriven.com/tags/">
+<meta name="twitter:title" content="view-design 按需加载踩坑01">
+<meta name="twitter:description" content="问题配置了按需加载后，发现存在非Template中使用的组件，比如Message、LoadingBar这种，无法使用Vue.component(‘Message’, Message) 来全局注册。 解决方法：123456// main.js import &amp;#123; Message &amp;#125; from &apos;view-design&apos;Vue.prototype.$Message = Message">
+  <link rel="canonical" href="https://blog.flyriven.com/FrontEnd/view-design-按需加载踩坑01/">
 
 
 <script id="page-configurations">
@@ -71,13 +74,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
-    isPage: true,
+    isPost: true,
+    isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>tags | Tmpfile's Blog</title>
+  <title>view-design 按需加载踩坑01 | Tmpfile's Blog</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -194,24 +197,6 @@
 
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 </nav>
 </div>
     </header>
@@ -230,59 +215,114 @@
             
 
   <div id="posts" class="posts-expand">
-    
-    
-    
-    <div class="post-block page">
-      <header class="post-header">
-
-<h1 class="post-title" itemprop="name headline">tags
-
-</h1>
-
-<div class="post-meta">
+      <article itemscope itemtype="http://schema.org/Article">
   
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://blog.flyriven.com/FrontEnd/view-design-按需加载踩坑01/">
 
-</div>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="comeriven">
+      <meta itemprop="description" content="而今千里無書信，空待枝頭燕傳歌">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
 
-</header>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tmpfile's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">view-design 按需加载踩坑01
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-11-21 10:01:32 / Modified: 18:13:18" itemprop="dateCreated datePublished" datetime="2019-11-21T10:01:32+08:00">2019-11-21</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FrontEnd/" itemprop="url" rel="index"><span itemprop="name">FrontEnd</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-      
-      
-      <div class="post-body">
+        <h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>配置了按需加载后，发现存在非Template中使用的组件，比如Message、LoadingBar这种，无法使用Vue.component(‘Message’, Message) 来全局注册。</p>
+<h4 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js </span></span><br><span class="line"><span class="keyword">import</span> &#123; Message &#125; <span class="keyword">from</span> <span class="string">'view-design'</span></span><br><span class="line">Vue.prototype.$Message = Message</span><br><span class="line"></span><br><span class="line"><span class="comment">// Home.vue</span></span><br><span class="line"><span class="keyword">this</span>.$Message.success(options)</span><br></pre></td></tr></table></figure>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+    </div>
+
+    
+    
+    
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
               
+                <a href="/FrontEnd/view-design-应用/" rel="next" title="view-design 应用">
+                  <i class="fa fa-chevron-left"></i> view-design 应用
+                </a>
               
-                
-                  
-                
-              
-                
-                  
-                
-              
-              2 tags in total
             </div>
-            <div class="tag-cloud-tags">
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
               
-                <a href="/tags/VPS/" style="font-size: 12px; color: #ccc">VPS</a> <a href="/tags/hexo-math/" style="font-size: 12px; color: #ccc">hexo, math</a>
+                <a href="/FrontEnd/view-design-踩坑02/" rel="prev" title="view-design 踩坑02">
+                  view-design 踩坑02 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
         
-      </div>
-      
-      
-      
-    </div>
+      </footer>
     
+  </div>
+  
+  
+  
+  </article>
 
-    
-    
-    
   </div>
 
 
@@ -319,6 +359,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决方法："><span class="nav-number">2.</span> <span class="nav-text">解决方法：</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
@@ -453,6 +495,56 @@
 
   
 
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
   
 
   
